@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundryone — Performance Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- ══ CONTACT MODAL ══ -->
+<div id="modal-overlay" style="
+  position:fixed;inset:0;z-index:500;
+  background:rgba(13,13,12,.55);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s cubic-bezier(.16,1,.3,1);
+" onclick="closeModal(event)">
+  <div id="modal-box" style="
+    background:var(--white);border-radius:24px;
+    width:100%;max-width:520px;
+    box-shadow:0 32px 80px rgba(0,0,0,.22);
+    transform:translateY(20px) scale(.97);
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+    overflow:hidden;
+  ">
+    <div style="padding:36px 36px 0;display:flex;justify-content:space-between;align-items:start">
+      <div>
+        <p style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px">Kontakt</p>
+        <h2 style="font-family:var(--f-disp);font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--ink)">Wie möchtest du<br>mit uns sprechen?</h2>
+      </div>
+      <button onclick="closeModal()" style="background:rgba(13,13,12,.07);border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);flex-shrink:0;margin-left:16px;transition:background .2s" onmouseover="this.style.background='rgba(13,13,12,.13)'" onmouseout="this.style.background='rgba(13,13,12,.07)'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div id="modal-options" style="padding:24px 36px 36px;display:flex;flex-direction:column;gap:12px">
+      <button onclick="showForm()" style="display:flex;align-items:center;gap:20px;background:var(--paper);border:1.5px solid transparent;border-radius:16px;padding:20px 22px;cursor:pointer;text-align:left;font-family:var(--f-body);transition:border-color .2s,background .2s;width:100%" onmouseover="this.style.borderColor='var(--blue)';this.style.background='var(--blue-lt)'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--paper)'">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.6"/><path d="M3 7h14M7 4v3M13 4v3" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:15px;color:var(--ink);margin-bottom:3px">Formular ausfüllen</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:300">Wir melden uns innerhalb von 24h</div>
+        </div>
+        <svg style="margin-left:auto;flex-shrink:0" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H7M13 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <a href="https://wa.me/49XXXXXXXXXX?text=Hallo%2C%20ich%20interessiere%20mich%20für%20eure%20Leistungen." target="_blank" style="display:flex;align-items:center;gap:20px;background:var(--paper);border:1.5px solid transparent;border-radius:16px;padding:20px 22px;cursor:pointer;text-decoration:none;font-family:var(--f-body);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='#25D366';this.style.background='#F0FBF4'" onmouseout="this.style.borderColor='transparent';this.style.background='var(--paper)'">
+        <div style="width:44px;height:44px;border-radius:12px;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.72-1.24A9 9 0 1011 2zm-3.5 5.5c.2 0 .4 0 .55.01.22.01.44.1.6.44.2.4.62 1.53.67 1.64.06.11.1.24.02.39-.08.14-.12.23-.23.35-.12.12-.25.27-.35.36-.12.1-.24.22-.1.44.14.22.62.99 1.33 1.6.92.8 1.69 1.05 1.93 1.17.23.11.37.09.5-.06.14-.15.6-.7.76-.94.16-.23.32-.2.54-.12.22.08 1.4.66 1.64.78.23.12.38.18.44.28.06.1.06.56-.14 1.1-.2.54-1.14 1.03-1.57 1.08-.43.05-.84.07-2.7-.56-2.27-.78-3.7-3.08-3.82-3.22-.11-.14-.93-1.24-.93-2.37 0-1.13.59-1.68.8-1.91.2-.23.45-.29.6-.29z" fill="white"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:15px;color:var(--ink);margin-bottom:3px">WhatsApp schreiben</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:300">Schnelle Antwort, direkt &amp; unkompliziert</div>
+        </div>
+        <svg style="margin-left:auto;flex-shrink:0" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H7M13 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+
+      <a href="/cdn-cgi/l/email-protection#bfd7dad3d3d0ffd9d0cad1dbcdc6d0d1da91dbda80cccaddd5dadccb82fed1d9cdded8da9a8d8ff9d0cad1dbcdc6d0d1da" style="display:flex;align-items:center;gap:20px;background:var(--paper);border:1.5px solid transparent;border-radius:16px;padding:20px 22px;cursor:pointer;text-decoration:none;font-family:var(--f-body);transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--ink)'" onmouseout="this.style.borderColor='transparent'">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="white" stroke-width="1.6"/><path d="M2 7l8 5 8-5" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:15px;color:var(--ink);margin-bottom:3px">E-Mail schreiben</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:300"><span class="__cf_email__" data-cfemail="9ef6fbf2f2f1def8f1ebf0faece7f1f0fbb0fafb">[email&#160;protected]</span></div>
+        </div>
+        <svg style="margin-left:auto;flex-shrink:0" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H7M13 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <!-- Inline Form -->
+    <div id="modal-form" style="display:none;padding:0 36px 36px">
+      <button onclick="showOptions()" style="display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:var(--f-body);font-size:13px;color:var(--muted);margin-bottom:24px;padding:0">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M3 7l4-4M3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Zurück
+      </button>
+      <form onsubmit="submitForm(event)" style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Vorname</label>
+            <input type="text" placeholder="Max" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Nachname</label>
+            <input type="text" placeholder="Mustermann" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">E-Mail</label>
+          <input type="email" placeholder="max@firma.de" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Monatliches Werbebudget</label>
+          <select style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);cursor:pointer;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+            <option>Unter 1.000 €</option>
+            <option>1.000 – 3.000 €</option>
+            <option selected>3.000 – 10.000 €</option>
+            <option>10.000 – 30.000 €</option>
+            <option>Über 30.000 €</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Nachricht (optional)</label>
+          <textarea placeholder="Was möchtest du erreichen?" rows="3" style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);resize:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'"></textarea>
+        </div>
+        <button type="submit" style="background:var(--ink);color:var(--white);border:none;border-radius:60px;padding:14px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--f-body);transition:background .2s;margin-top:4px">Anfrage senden</button>
+      </form>
+    </div>
+
+    <!-- Success -->
+    <div id="modal-success" style="display:none;padding:20px 36px 48px;text-align:center">
+      <div style="width:64px;height:64px;border-radius:50%;background:#F0FBF4;border:2px solid #25D366;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14l5 5 11-11" stroke="#25D366" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 style="font-family:var(--f-disp);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px">Anfrage gesendet!</h3>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;line-height:1.6;max-width:280px;margin:0 auto 28px">Wir melden uns innerhalb von 24 Stunden bei dir.</p>
+      <button onclick="closeModal()" style="background:var(--ink);color:var(--white);border:none;border-radius:60px;padding:12px 28px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--f-body)">Schließen</button>
+    </div>
+  </div>
+</div>
+
+<!-- skeleton overlay -->
+<div class="skel-overlay" id="skel">
+  <div class="skel-line tall"></div>
+  <div class="skel-line" style="max-width:45%"></div>
+  <div class="skel-line sm" style="max-width:30%"></div>
+  <div style="height:24px"></div>
+  <div class="skel-block"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div class="skel-block" style="height:120px"></div>
+    <div class="skel-block" style="height:120px"></div>
+    <div class="skel-block" style="height:120px"></div>
+  </div>
+</div>
+
+<!-- nav -->
+<nav>
+  <div class="nav-in">
+    <span class="logo" onclick="go('home')">Foundryone</span>
+    <ul class="nav-links">
+      <li><a onclick="go('home')" data-p="home">Home</a></li>
+
+      <!-- Leistungen Dropdown -->
+      <li>
+        <a data-p-group="leistungen" style="cursor:default">
+          Leistungen
+          <span class="nav-chevron"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+        </a>
+        <div class="nav-dropdown">
+          <a class="dd-item" onclick="go('google')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4" stroke="var(--blue)" stroke-width="1.4"/><path d="M13 13l-2.5-2.5" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><div class="dd-label">Google Ads</div><div class="dd-sub">Search, Shopping, PMax</div></div>
+          </a>
+          <a class="dd-item" onclick="go('meta')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" fill="var(--blue)" opacity=".7"/><rect x="9" y="2" width="5" height="5" rx="1" fill="var(--blue)"/><rect x="2" y="9" width="5" height="5" rx="1" fill="var(--blue)"/><rect x="9" y="9" width="5" height="5" rx="1" fill="var(--blue)" opacity=".7"/></svg></div>
+            <div><div class="dd-label">Meta Ads</div><div class="dd-sub">Facebook &amp; Instagram</div></div>
+          </a>
+          <a class="dd-item" onclick="go('creatives')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="var(--blue)" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><div class="dd-label">Ad Creatives</div><div class="dd-sub">Werbemittel & Design</div></div>
+          </a>
+          <div class="dd-divider"></div>
+          <a class="dd-item" onclick="go('preise')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3 2 2 4-5 3 2" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><div class="dd-label">Preise & Rechner</div><div class="dd-sub">Kosten berechnen</div></div>
+          </a>
+        </div>
+      </li>
+
+      <!-- Kundenstories Dropdown -->
+      <li>
+        <a data-p-group="kundenstories" style="cursor:default">
+          Kundenstories
+          <span class="nav-chevron"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+        </a>
+        <div class="nav-dropdown">
+          <a class="dd-item" onclick="go('kampagnen')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10l3-3 2 2 4-5 3 2" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><div class="dd-label">Werbekampagnen</div><div class="dd-sub">Unsere Ergebnisse</div></div>
+          </a>
+          <a class="dd-item" onclick="go('stimmen')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 5h10M3 8h7M3 11h5" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><div class="dd-label">Kundenstimmen</div><div class="dd-sub">Was Kunden sagen</div></div>
+          </a>
+          <a class="dd-item" onclick="go('portfolio')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="var(--blue)" stroke-width="1.4"/><path d="M5 3V2M11 3V2" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><div class="dd-label">Websites Portfolio</div><div class="dd-sub">Unsere Webprojekte</div></div>
+          </a>
+          <a class="dd-item" onclick="go('bewertungen')">
+            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3.5H13l-2.8 2 1 3.5L8 9.2 4.8 11l1-3.5L3 5.5h3.5z" stroke="var(--blue)" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            <div><div class="dd-label">Kundenbewertungen</div><div class="dd-sub">Ratings &amp; Reviews</div></div>
+          </a>
+        </div>
+      </li>
+
+      <li><a onclick="go('ueber-uns')" data-p="ueber-uns">Über Uns</a></li>
+    </ul>
+    <button class="nav-pill" onclick="go('kontakt')">Kontakt aufnehmen</button>
+    <button class="hamburger" onclick="toggleMob()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mob">
+  <a onclick="go('home');closeMob()" data-p="home">Home</a>
+  <div style="padding:12px 0 4px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Leistungen</div>
+  <a onclick="go('google');closeMob()" data-p="google" style="padding-left:12px">Google Ads</a>
+  <a onclick="go('meta');closeMob()" data-p="meta" style="padding-left:12px">Meta Ads</a>
+  <a onclick="go('creatives');closeMob()" style="padding-left:12px">Ad Creatives</a>
+  <a onclick="go('preise');closeMob()" data-p="preise" style="padding-left:12px">Preise & Rechner</a>
+  <div style="padding:12px 0 4px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Kundenstories</div>
+  <a onclick="go('kampagnen');closeMob()" style="padding-left:12px">Werbekampagnen</a>
+  <a onclick="go('stimmen');closeMob()" style="padding-left:12px">Kundenstimmen</a>
+  <a onclick="go('portfolio');closeMob()" style="padding-left:12px">Websites Portfolio</a>
+  <a onclick="go('bewertungen');closeMob()" style="padding-left:12px">Kundenbewertungen</a>
+  <a onclick="go('ueber-uns');closeMob()" data-p="ueber-uns">Über Uns</a>
+  <button class="mob-cta-btn" onclick="go('kontakt');closeMob()">Kontakt aufnehmen</button>
+</div>
+
+<!-- ══════════ HOME ══════════ -->
+<div class="page active" id="page-home">
+<div class="page-wrap in">
+
+  <!-- HERO -->
+  <section class="hero bg-paper">
+    <div class="hero-grid-bg"></div>
+    <div class="inner">
+      <div class="hero-content">
+        <span class="hero-eye">Performance Marketing Agentur</span>
+        <h1>
+          <span class="hl"><span>Wachstum,</span></span>
+          <span class="hl"><span>das sich</span></span>
+          <span class="hl"><span class="blue-word">rechnet.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Wir skalieren dein Business mit Google Ads und Meta Ads — datengetrieben, präzise, messbar. Kein Budgetverschwendung. Nur Ergebnisse.</p>
+          <div class="hero-ctas">
+            <button class="btn-ink" onclick="openModal()">Budget berechnen</button>
+            <button class="btn-outline" onclick="go('google')">Leistungen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar bg-white">
+    <div class="stats-inner">
+      <div class="s-item rv">
+        <div class="s-num"><span class="count" data-target="4.2" data-dec="1" data-suf="×">4.2×</span></div>
+        <div class="s-lbl">Durchschnittlicher ROAS<br>unserer Kunden</div>
+      </div>
+      <div class="s-item rv d1">
+        <div class="s-num">€<span class="count" data-target="12" data-suf="M+">12M+</span></div>
+        <div class="s-lbl">Verwaltetes<br>Werbebudget</div>
+      </div>
+      <div class="s-item rv d2">
+        <div class="s-num"><span class="count" data-target="200" data-suf="+">200+</span></div>
+        <div class="s-lbl">Erfolgreich betreute<br>Kampagnen</div>
+      </div>
+      <div class="s-item rv d3">
+        <div class="s-num">−<span class="count" data-target="34" data-suf="%">34%</span></div>
+        <div class="s-lbl">Durchschnittliche Senkung<br>des CPA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="bg-paper">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Leistungen</span>
+        <h2>Alles aus einer Hand.</h2>
+        <p class="s-head-sub">Von der Strategie über die Kreation bis zur laufenden Optimierung — wir übernehmen dein gesamtes Performance Marketing.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-item rv" onclick="go('google')">
+          <span class="svc-num">01</span>
+          <h3>Google Ads</h3>
+          <p>Search, Shopping, Display und Performance Max. Wir erschließen jede relevante Plattform im Google-Ökosystem für maximale Reichweite und präzise Conversion.</p>
+          <div class="svc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="color:var(--ink)"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="svc-item accent rv d1" onclick="go('meta')">
+          <span class="svc-num">02</span>
+          <h3>Meta Ads</h3>
+          <p>Facebook und Instagram Kampagnen mit Creative-First-Ansatz, präzisem Targeting und Full-Funnel-Strategie — von der Awareness bis zum Kauf.</p>
+          <div class="svc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="color:rgba(255,255,255,0.7)"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="svc-item wide rv d2" onclick="go('meta')" style="border-top:none">
+          <span class="svc-num">03</span>
+          <h3>Ad Creatives</h3>
+          <p style="max-width:520px">Werbemittel, die stoppen, fesseln, konvertieren. Wir entwickeln Creatives mit Performance-Fokus — getestet, iteriert und immer auf den Algorithmus abgestimmt.</p>
+          <div class="svc-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="color:var(--ink)"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USPs -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Warum Foundryone</span>
+        <h2>Wir denken wie Unternehmer.</h2>
+      </div>
+      <div class="usp-list">
+        <div class="usp-row rv">
+          <div class="usp-label">Volle Transparenz</div>
+          <div class="usp-desc">Klare Reports, keine Black Boxes. Du siehst genau, wo jeder Euro deines Budgets landet — mit Dashboards in Echtzeit und monatlichen Performance-Reviews.</div>
+        </div>
+        <div class="usp-row rv d1">
+          <div class="usp-label">Performance First</div>
+          <div class="usp-desc">Jede Entscheidung ist datenbasiert. Wir optimieren auf echte Ergebnisse — nicht auf Klicks oder Impressionen, die sich nicht in Umsatz niederschlagen.</div>
+        </div>
+        <div class="usp-row rv d2">
+          <div class="usp-label">Fixe Agentur-Fee</div>
+          <div class="usp-desc">Keine versteckten Kosten, keine erfolgsabhängigen Boni, die Interessenkonflikte erzeugen. Unser Preis ist klar kalkulierbar — vom ersten Tag an.</div>
+        </div>
+        <div class="usp-row rv d3">
+          <div class="usp-label">Schnelle Skalierung</div>
+          <div class="usp-desc">Vom ersten Euro bis zu sechsstelligen Monatsbudgets — wir wachsen mit dir und deinen Zielen, ohne Qualitätsverlust bei der Betreuung.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-ink cta-s" id="home-cta">
+    <div class="inner">
+      <h2 class="rv">Bereit für<br>messbare Ergebnisse?</h2>
+      <p class="rv d1">Buche jetzt dein kostenloses Erstgespräch — wir analysieren dein Business und zeigen konkrete Potenziale auf.</p>
+      <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ══════════ GOOGLE ADS ══════════ -->
+<div class="page" id="page-google">
+<div class="page-wrap">
+
+  <section class="hero bg-paper" style="min-height:72vh">
+    <div class="hero-grid-bg"></div>
+    <div class="inner">
+      <div class="hero-content">
+        <span class="hero-eye">Google Ads</span>
+        <h1>
+          <span class="hl"><span>Ganz oben.</span></span>
+          <span class="hl"><span>Zur richtigen</span></span>
+          <span class="hl"><span class="blue-word">Zeit.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Wenn potenzielle Kunden suchen, bist du da. Mit präzisen Google Ads-Kampagnen, die den gesamten Kaufzyklus abdecken.</p>
+          <div class="hero-ctas">
+            <button class="btn-ink" onclick="openModal()">Jetzt starten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Unser Prozess</span>
+        <h2>Systematisch<br>zum Erfolg.</h2>
+        <p class="s-head-sub">Von der Analyse bis zur Skalierung — ein bewährter Prozess, der Ergebnisse liefert.</p>
+      </div>
+      <div class="proc-grid">
+        <div class="proc-item rv">
+          <span class="proc-n">01</span>
+          <h4>Analyse & Strategie</h4>
+          <p>Wir analysieren dein Business, Wettbewerber und Zielgruppe. Daraus entwickeln wir eine maßgeschneiderte Strategie.</p>
+        </div>
+        <div class="proc-item rv d1">
+          <span class="proc-n">02</span>
+          <h4>Setup & Tracking</h4>
+          <p>Sauberes Conversion-Tracking, strukturierte Kampagnen-Architektur und vollständiges Analytics-Setup.</p>
+        </div>
+        <div class="proc-item rv d2">
+          <span class="proc-n">03</span>
+          <h4>Launch & Optimierung</h4>
+          <p>Kontinuierliches Testing, Gebotsoptimierung und Qualitätsscore-Verbesserung für maximale Effizienz.</p>
+        </div>
+        <div class="proc-item rv d3">
+          <span class="proc-n">04</span>
+          <h4>Skalierung</h4>
+          <p>Was funktioniert, wird skaliert. Was nicht, wird eliminiert. Datengetrieben, konsequent, transparent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGNS -->
+  <section class="bg-paper">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Kampagnen-Typen</span>
+        <h2>Das gesamte<br>Google-Ökosystem.</h2>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-item rv">
+          <span class="feat-tag">Search</span>
+          <h4>Search Ads</h4>
+          <p>Exakt dann sichtbar, wenn Nutzer nach deinem Angebot suchen. Höchste Kaufabsicht, maximale Relevanz.</p>
+        </div>
+        <div class="feat-item rv d1">
+          <span class="feat-tag">Shopping</span>
+          <h4>Shopping Ads</h4>
+          <p>Produkte direkt in den Suchergebnissen präsentieren. Mehr Klicks, bessere Conversion-Rates für E-Commerce.</p>
+        </div>
+        <div class="feat-item rv d2">
+          <span class="feat-tag">Display</span>
+          <h4>Display Ads</h4>
+          <p>Reichweite aufbauen und Markenbekanntheit steigern — auf über 2 Millionen Partner-Websites im Google-Netzwerk.</p>
+        </div>
+        <div class="feat-item rv">
+          <span class="feat-tag">YouTube</span>
+          <h4>YouTube Ads</h4>
+          <p>Video-Werbung mit gezieltem Targeting. Branding und Performance gleichzeitig auf der weltgrößten Video-Plattform.</p>
+        </div>
+        <div class="feat-item rv d1">
+          <span class="feat-tag">Remarketing</span>
+          <h4>Remarketing</h4>
+          <p>Besucher, die noch nicht konvertiert haben, gezielt zurückholen. Höhere Conversion-Rate, niedrigerer CPA.</p>
+        </div>
+        <div class="feat-item rv d2">
+          <span class="feat-tag">PMax</span>
+          <h4>Performance Max</h4>
+          <p>KI-gestützte Kampagnen, die automatisch alle Google-Kanäle bespielen und auf Conversions optimieren.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head center rv">
+        <span class="eyebrow">Ergebnisse</span>
+        <h2>Zahlen, die sprechen.</h2>
+        <p class="s-head-sub">Durchschnittliche Ergebnisse unserer Google Ads Kunden im ersten Quartal.</p>
+      </div>
+      <div class="res-grid">
+        <div class="res-item rv">
+          <div class="res-num">+<span class="count" data-target="187" data-suf="%">187%</span></div>
+          <div class="res-desc">Steigerung des<br>Conversion-Volumens</div>
+        </div>
+        <div class="res-item rv d1">
+          <div class="res-num">−<span class="count" data-target="41" data-suf="%">41%</span></div>
+          <div class="res-desc">Senkung des<br>Cost-per-Acquisition</div>
+        </div>
+        <div class="res-item rv d2">
+          <div class="res-num"><span class="count" data-target="5.8" data-dec="1" data-suf="×">5.8×</span></div>
+          <div class="res-desc">ROAS bei<br>Shopping-Kampagnen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink cta-s">
+    <div class="inner">
+      <h2 class="rv">Google Ads,<br>die sich auszahlen.</h2>
+      <p class="rv d1">Starte jetzt mit einer kostenlosen Analyse deines Kontos — oder starte komplett neu mit uns.</p>
+      <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ══════════ META ADS ══════════ -->
+<div class="page" id="page-meta">
+<div class="page-wrap">
+
+  <section class="hero bg-paper" style="min-height:72vh">
+    <div class="hero-grid-bg"></div>
+    <div class="inner">
+      <div class="hero-content">
+        <span class="hero-eye">Meta Ads</span>
+        <h1>
+          <span class="hl"><span>Kreativität</span></span>
+          <span class="hl"><span>trifft</span></span>
+          <span class="hl"><span class="blue-word">Conversion.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Facebook und Instagram Kampagnen, die nicht nur auffallen, sondern verkaufen. Creative-First. Datengesteuert. Skalierbar.</p>
+          <div class="hero-ctas">
+            <button class="btn-ink" onclick="openModal()">Jetzt starten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE PHIL -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="split">
+        <div>
+          <span class="eyebrow rv">Creative-First-Philosophie</span>
+          <h2 class="rv d1">Das Creative ist deine wichtigste Variable.</h2>
+          <p class="rv d2">Im Meta-Algorithmus entscheidet nicht das Budget — sondern das Creative. Wir entwickeln Werbemittel, die im Feed stoppen, Emotionen auslösen und Conversions erzeugen.</p>
+          <ul class="check-list rv d3">
+            <li><span class="dot"></span>Hooks, die in 2 Sekunden fesseln</li>
+            <li><span class="dot"></span>Scroll-stoppende Visuals für Feed und Stories</li>
+            <li><span class="dot"></span>Datenbasiertes Creative-Testing (A/B & MVT)</li>
+            <li><span class="dot"></span>Iteration auf Basis von Performance-Daten</li>
+            <li><span class="dot"></span>Formate für jede Funnel-Phase</li>
+            <li><span class="dot"></span>UGC-Style, Motion Design und Static Ads</li>
+          </ul>
+        </div>
+        <div class="rv d1">
+          <div class="vis-ph">
+            <span class="vis-ph-label">Ad Creative<br>Mockup</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGNS -->
+  <section class="bg-paper">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Kampagnen-Typen</span>
+        <h2>Für jedes Ziel<br>die richtige Kampagne.</h2>
+      </div>
+      <div class="camp-grid">
+        <div class="camp-item rv">
+          <h3>Conversion Campaigns</h3>
+          <p>Direkte Verkäufe, Leads und Anmeldungen. Vollständig optimiert auf dein primäres Conversion-Ziel — mit dynamischen Creatives und Advantage+ Targeting.</p>
+        </div>
+        <div class="camp-item rv d1">
+          <h3>Retargeting</h3>
+          <p>Website-Besucher, Videoaufrufer und Warenkorbabbrecher zurückgewinnen. Personalisierte Botschaften auf Basis des Nutzerverhaltens.</p>
+        </div>
+        <div class="camp-item rv d2">
+          <h3>Brand Awareness</h3>
+          <p>Reichweite aufbauen und Markenbekanntheit skalieren. Breit gestreut, aber intelligent — mit Reach & Frequency-Buying für planbare Reichweite.</p>
+        </div>
+        <div class="camp-item rv d3">
+          <h3>Lead Generation</h3>
+          <p>Native Lead-Forms direkt in Facebook und Instagram. Maximale Conversion-Rate durch minimale Reibung im Formular-Flow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNNEL -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head center rv">
+        <span class="eyebrow">Full-Funnel-Strategie</span>
+        <h2>Jeden Nutzer<br>zur richtigen Zeit.</h2>
+        <p class="s-head-sub">Wir begleiten Kunden vom ersten Kontakt bis zum Kauf — mit abgestimmten Botschaften auf jeder Stufe.</p>
+      </div>
+      <div class="funnel-wrap rv">
+        <div class="f-step f1">
+          <div class="f-lbl">Top of Funnel</div>
+          <h4>Awareness</h4>
+          <p>Breite Zielgruppen · Video Ads · Brand Story</p>
+        </div>
+        <div class="f-step f2">
+          <div class="f-lbl">Middle of Funnel</div>
+          <h4>Consideration</h4>
+          <p>Engagement-Kampagnen · Produktvorteile · Vertrauen aufbauen</p>
+        </div>
+        <div class="f-step f3">
+          <div class="f-lbl">Bottom of Funnel</div>
+          <h4>Conversion</h4>
+          <p>Retargeting · Dynamic Ads · Angebote & Urgency</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink cta-s">
+    <div class="inner">
+      <h2 class="rv">Meta Ads, die<br>wirklich konvertieren.</h2>
+      <p class="rv d1">Lass uns gemeinsam eine Creative-Strategie entwickeln, die dein Budget in messbare Ergebnisse verwandelt.</p>
+      <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ══════════ PREISE ══════════ -->
+<div class="page" id="page-preise">
+<div class="page-wrap">
+
+  <section class="bg-paper" style="padding-top:100px;padding-bottom:60px">
+    <div class="inner">
+      <span class="eyebrow rv">Transparente Preise</span>
+      <h1 class="rv d1" style="font-family:var(--f-disp);font-size:clamp(48px,6vw,88px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px">Berechne<br>dein Budget.</h1>
+      <p class="rv d2" style="font-size:17px;color:var(--muted);font-weight:300;max-width:400px;line-height:1.6">Konfiguriere dein Paket. Alle Preise sind Richtwerte — individuelle Angebote auf Anfrage.</p>
+    </div>
+  </section>
+
+  <section class="bg-paper" style="padding-top:0">
+    <div class="inner">
+      <div class="calc-grid">
+        <!-- Controls -->
+        <div>
+          <div class="calc-block rv">
+            <p class="calc-lbl">Leistung</p>
+            <div class="seg">
+              <button class="seg-b on" id="sg-google" onclick="setSvc('google')">Google Ads</button>
+              <button class="seg-b" id="sg-meta" onclick="setSvc('meta')">Meta Ads</button>
+              <button class="seg-b" id="sg-beide" onclick="setSvc('beide')">Beide</button>
+            </div>
+          </div>
+
+          <div class="calc-block rv d1">
+            <p class="calc-lbl">Monatliches Werbebudget</p>
+            <div class="slider-val" id="bval">2.000 €</div>
+            <input type="range" id="bslider" min="500" max="50000" step="500" value="2000" oninput="updCalc()">
+            <div class="range-labels"><span>500 €</span><span>50.000 €</span></div>
+          </div>
+
+          <div class="calc-block rv d2">
+            <p class="calc-lbl">Laufzeit</p>
+            <div class="seg">
+              <button class="seg-b" id="sd-1" onclick="setDur(1)">Flexibel</button>
+              <button class="seg-b on" id="sd-3" onclick="setDur(3)">3 Monate</button>
+              <button class="seg-b" id="sd-6" onclick="setDur(6)">6 Monate</button>
+              <button class="seg-b" id="sd-12" onclick="setDur(12)">12 Monate</button>
+            </div>
+            <p id="disc-msg" style="margin-top:12px;font-size:13px;color:var(--blue);min-height:20px"></p>
+          </div>
+        </div>
+
+        <!-- Result card -->
+        <div class="rv d1">
+          <div class="r-card">
+            <div class="r-card-head">
+              <h3>Dein Angebot</h3>
+              <p>Monatliche Gesamtkosten</p>
+            </div>
+            <div class="r-card-body">
+              <div class="r-row">
+                <span class="rl">Werbebudget / Monat</span>
+                <span class="rv-val" id="rv-bud">2.000 €</span>
+              </div>
+              <div class="r-row">
+                <span class="rl">Agentur-Fee / Monat</span>
+                <span class="rv-val" id="rv-fee">800 €</span>
+              </div>
+              <div class="r-row">
+                <span class="rl">Einrichtungsgebühr <span style="font-size:11px;background:rgba(21,71,232,.1);color:var(--blue);border-radius:4px;padding:2px 6px;font-weight:500">einmalig</span></span>
+                <span class="rv-val" id="rv-setup">500 €</span>
+              </div>
+              <div class="r-row" id="rd-row" style="display:none">
+                <span class="rl" style="color:#34C759;font-weight:500">Rabatt (12 Monate)</span>
+                <span class="rv-val" id="rv-disc" style="color:#34C759">−0 €</span>
+              </div>
+              <div class="r-row big">
+                <span class="rl">Gesamt / Monat</span>
+                <span class="rv-val" id="rv-mo">2.800 €</span>
+              </div>
+              <div class="r-row" id="rv-tot-row">
+                <span class="rl" id="rv-tot-lbl">Gesamtinvestition (3 Monate)</span>
+                <span class="rv-val" id="rv-tot">8.900 €</span>
+              </div>
+            </div>
+            <div class="r-card-foot">
+              <button class="btn-ink" style="width:100%;justify-content:center" onclick="window.location='mailto:hello@foundryone.de'">Unverbindlich anfragen</button>
+              <p style="margin-top:14px">Individuelle Angebote auf Anfrage. Kein Einrichtungs-Fee.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Preisstruktur</span>
+        <h2>Keine versteckten Kosten.</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item rv">
+          <span class="info-tag">Agentur-Fee</span>
+          <h4>15% vom Werbebudget</h4>
+          <p>Mindestens 500 €/Monat. Die Fee deckt Strategie, Kampagnen-Management, Reporting und laufende Optimierung ab.</p>
+        </div>
+        <div class="info-item rv d1">
+          <span class="info-tag">Laufzeitrabatt</span>
+          <h4>10% bei 12 Monaten</h4>
+          <p>Wer langfristig plant, spart. Bei 12 Monaten Laufzeit gewähren wir 10% Rabatt auf die gesamte Agentur-Fee.</p>
+        </div>
+        <div class="info-item rv d2">
+          <span class="info-tag">Inklusive</span>
+          <h4>Setup & Onboarding</h4>
+          <p>Kein Einrichtungs-Fee. Tracking-Setup, Kampagnen-Struktur und Strategie sind im ersten Monat enthalten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink cta-s" id="preise-cta">
+    <div class="inner">
+      <h2 class="rv">Lass uns<br>loslegen.</h2>
+      <p class="rv d1">Buche dein kostenloses Erstgespräch. 30 Minuten — konkrete Potenziale, klare nächste Schritte.</p>
+      <a href="/cdn-cgi/l/email-protection#523a373e3e3d12343d273c36202b3d3c377c3637" class="btn-white-inv rv d2"><span class="__cf_email__" data-cfemail="a6cec3cacac9e6c0c9d3c8c2d4dfc9c8c388c2c3">[email&#160;protected]</span></a>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ══════════ AD CREATIVES ══════════ -->
+<div class="page" id="page-creatives">
+<div class="page-wrap">
+
+  <section class="hero bg-paper" style="min-height:72vh">
+    <div class="hero-grid-bg"></div>
+    <div class="inner">
+      <div class="hero-content">
+        <span class="hero-eye">Ad Creatives</span>
+        <h1>
+          <span class="hl"><span>Werbemittel,</span></span>
+          <span class="hl"><span>die</span></span>
+          <span class="hl"><span class="blue-word">konvertieren.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Creatives, die im Feed stoppen, Emotionen auslösen und Klicks erzeugen — entwickelt mit Performance-Fokus, iteriert auf Basis echter Daten.</p>
+          <div class="hero-ctas">
+            <button class="btn-ink" onclick="go('kontakt')">Kontakt aufnehmen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">Was wir liefern</span>
+        <h2>Formate für jeden<br>Kanal & Funnel.</h2>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-item rv">
+          <span class="feat-tag">Static Ads</span>
+          <h4>Statische Anzeigen</h4>
+          <p>Klare Botschaft, starkes Visual. Perfekt für Feed-Placements und Display-Kampagnen mit hoher Impression-Dichte.</p>
+        </div>
+        <div class="feat-item rv d1">
+          <span class="feat-tag">Video Ads</span>
+          <h4>Video & Motion</h4>
+          <p>Scroll-stoppende Videos für Stories, Reels und YouTube. Hooks in den ersten 2 Sekunden, die fesseln.</p>
+        </div>
+        <div class="feat-item rv d2">
+          <span class="feat-tag">UGC-Style</span>
+          <h4>UGC-Style Creatives</h4>
+          <p>Authentisch wirkende Werbemittel im User-Generated-Content-Stil — hohe Trust-Rate, starke Performance.</p>
+        </div>
+        <div class="feat-item rv">
+          <span class="feat-tag">Carousel</span>
+          <h4>Carousel Ads</h4>
+          <p>Mehrere Produkte oder Argumente in einem Format. Ideal für E-Commerce und Feature-Präsentationen.</p>
+        </div>
+        <div class="feat-item rv d1">
+          <span class="feat-tag">A/B Testing</span>
+          <h4>Creative Testing</h4>
+          <p>Systematisches Testen von Hooks, Visuals und CTAs. Wir iterieren auf Basis echter Performance-Daten.</p>
+        </div>
+        <div class="feat-item rv d2">
+          <span class="feat-tag">Branding</span>
+          <h4>Brand-konsistente Ads</h4>
+          <p>Werbemittel, die zu deiner Marke passen — visuell und inhaltlich konsistent über alle Kanäle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper">
+    <div class="inner">
+      <div class="split">
+        <div>
+          <span class="eyebrow rv">Unser Prozess</span>
+          <h2 class="rv d1">Creative trifft Strategie.</h2>
+          <p class="rv d2">Gutes Design allein reicht nicht — Creatives müssen auf den Algorithmus, die Zielgruppe und die Funnel-Phase abgestimmt sein. Wir denken Performance, nicht nur Ästhetik.</p>
+          <ul class="check-list rv d3">
+            <li><span class="dot"></span>Briefing & Strategie-Workshop</li>
+            <li><span class="dot"></span>Konzeption & Produktion</li>
+            <li><span class="dot"></span>Launch & Performance-Tracking</li>
+            <li><span class="dot"></span>Iteration auf Basis von Daten</li>
+          </ul>
+        </div>
+        <div class="rv d1">
+          <div class="vis-ph" style="min-height:360px">
+            <span class="vis-ph-label">Creative Beispiele</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-ink cta-s">
+    <div class="inner">
+      <h2 class="rv">Creatives, die<br>wirklich performen.</h2>
+      <p class="rv d1">Lass uns gemeinsam Werbemittel entwickeln, die dein Budget in Ergebnisse verwandeln.</p>
+      <button class="btn-white-inv rv d2" onclick="go('kontakt')">Kontakt aufnehmen</button>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<!-- ══════════ ÜBER UNS ══════════ -->
+<div class="page" id="page-ueber-uns">
+<div class="page-wrap">
+  <section class="hero bg-paper" style="min-height:72vh">
+    <div class="hero-grid-bg"></div>
+    <div class="inner">
+      <div class="hero-content">
+        <span class="hero-eye">Über Uns</span>
+        <h1>
+          <span class="hl"><span>Wir sind</span></span>
+          <span class="hl"><span class="blue-word">Foundryone.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Eine Performance Marketing Agentur, die denkt wie Unternehmer. Datengetrieben, transparent, ergebnisorientiert.</p>
+          <div class="hero-ctas"><button class="btn-ink" onclick="go('kontakt')">Kontakt aufnehmen</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-white">
+    <div class="inner">
+      <div class="split">
+        <div>
+          <span class="eyebrow rv">Unsere Mission</span>
+          <h2 class="rv d1">Performance Marketing, das wirklich liefert.</h2>
+          <p class="rv d2">Foundryone wurde gegründet, weil wir selbst erlebt haben, wie Budgets in ineffizienten Kampagnen verschwinden. Wir setzen auf Transparenz, Daten und echte Ergebnisse — keine Buzzwords.</p>
+          <ul class="check-list rv d3">
+            <li><span class="dot"></span>Gegründet von Unternehmern für Unternehmer</li>
+            <li><span class="dot"></span>Spezialisiert auf Google Ads &amp; Meta Ads</li>
+            <li><span class="dot"></span>Volle Transparenz über Budget und Ergebnisse</li>
+            <li><span class="dot"></span>Keine Mindestlaufzeit ohne Ergebnis-Garantie</li>
+          </ul>
+        </div>
+        <div class="rv d1">
+          <div class="vis-ph" style="min-height:360px"><span class="vis-ph-label">Team Foto</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-ink cta-s">
+    <div class="inner">
+      <h2 class="rv">Lern uns kennen.</h2>
+      <p class="rv d1">Buch ein kostenloses 30-Minuten-Gespräch — kein Verkaufsgespräch, sondern ehrliche Beratung.</p>
+      <button class="btn-white-inv rv d2" onclick="go('kontakt')">Kontakt aufnehmen</button>
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- ══════════ KONTAKT ══════════ -->
+<div class="page" id="page-kontakt">
+<div class="page-wrap">
+  <section class="bg-paper" style="padding-top:100px;padding-bottom:60px">
+    <div class="inner">
+      <span class="eyebrow rv">Kontakt</span>
+      <h1 class="rv d1" style="font-family:var(--f-disp);font-size:clamp(48px,6vw,88px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px">So erreichst<br>du uns.</h1>
+      <p class="rv d2" style="font-size:17px;color:var(--muted);font-weight:300;max-width:440px;line-height:1.6">Wähle den Weg, der dir am liebsten ist — wir antworten schnell.</p>
+    </div>
+  </section>
+  <section class="bg-paper" style="padding-top:0;padding-bottom:100px">
+    <div class="inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+        <!-- Contact options -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="rv" style="background:var(--white);border:1.5px solid var(--rule);border-radius:16px;padding:28px;display:flex;align-items:center;gap:20px;cursor:pointer;transition:border-color .2s" onclick="go('kontakt'); document.getElementById('kontakt-form').scrollIntoView()" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--rule)'">
+            <div style="width:48px;height:48px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="18" height="14" rx="2.5" stroke="white" stroke-width="1.6"/><path d="M2 7l9 6 9-6" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <div><div style="font-weight:600;font-size:15px;margin-bottom:3px">E-Mail</div><div style="font-size:13px;color:var(--muted);font-weight:300"><a href="/cdn-cgi/l/email-protection#056d6069696a45636a706b61777c6a6b602b6160" style="color:var(--blue);text-decoration:none"><span class="__cf_email__" data-cfemail="83ebe6efefecc3e5ecf6ede7f1faecede6ade7e6">[email&#160;protected]</span></a></div></div>
+          </div>
+          <a href="https://wa.me/49XXXXXXXXXX?text=Hallo%2C%20ich%20interessiere%20mich%20für%20eure%20Leistungen." target="_blank" class="rv d1" style="background:var(--white);border:1.5px solid var(--rule);border-radius:16px;padding:28px;display:flex;align-items:center;gap:20px;cursor:pointer;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='#25D366'" onmouseout="this.style.borderColor='var(--rule)'">
+            <div style="width:48px;height:48px;border-radius:12px;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.1-1.33A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zM8.5 7.5c.23 0 .47.01.65.02.26.01.52.12.7.52.24.48.74 1.82.8 1.95.07.14.11.3.02.47-.09.17-.14.28-.28.43-.14.14-.29.32-.41.43-.14.12-.28.26-.12.52.17.27.74 1.19 1.6 1.93 1.1.96 2.03 1.26 2.32 1.4.28.14.44.11.6-.07.17-.18.72-.84.91-1.13.19-.28.38-.24.65-.14.26.1 1.67.79 1.96.93.28.15.46.22.53.34.07.12.07.67-.17 1.32-.24.65-1.37 1.24-1.88 1.3-.51.06-1.01.08-3.24-.67-2.72-.94-4.44-3.7-4.58-3.87-.13-.17-1.12-1.49-1.12-2.84 0-1.35.7-2.01.96-2.29.24-.28.53-.35.71-.35z" fill="white"/></svg>
+            </div>
+            <div><div style="font-weight:600;font-size:15px;color:var(--ink);margin-bottom:3px">WhatsApp</div><div style="font-size:13px;color:var(--muted);font-weight:300">Schnelle Antwort, direkt &amp; unkompliziert</div></div>
+          </a>
+          <div class="rv d2" style="background:var(--ink);border-radius:16px;padding:28px">
+            <div style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">Antwortzeit</div>
+            <div style="font-family:var(--f-disp);font-size:28px;font-weight:700;color:var(--white);margin-bottom:6px">&lt; 24h</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.5);font-weight:300">Wir antworten auf jede Anfrage innerhalb eines Werktags.</div>
+          </div>
+        </div>
+        <!-- Form -->
+        <div id="kontakt-form" class="rv d1">
+          <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:20px">Formular</p>
+          <form id="kontakt-form-el" onsubmit="submitKontakt(event)" style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div>
+                <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Vorname</label>
+                <input type="text" placeholder="Max" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+              </div>
+              <div>
+                <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Nachname</label>
+                <input type="text" placeholder="Mustermann" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">E-Mail</label>
+              <input type="email" placeholder="max@firma.de" required style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Monatliches Werbebudget</label>
+              <select style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);cursor:pointer;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'">
+                <option>Unter 1.000 €</option>
+                <option>1.000 – 3.000 €</option>
+                <option selected>3.000 – 10.000 €</option>
+                <option>10.000 – 30.000 €</option>
+                <option>Über 30.000 €</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Nachricht</label>
+              <textarea placeholder="Was möchtest du erreichen?" rows="4" style="width:100%;padding:12px 14px;border:1.5px solid rgba(13,13,12,.12);border-radius:10px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--white);resize:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='rgba(13,13,12,.12)'"></textarea>
+            </div>
+            <button type="submit" style="background:var(--ink);color:var(--white);border:none;border-radius:60px;padding:14px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--f-body)">Anfrage senden</button>
+          </form>
+          <div id="kontakt-success" style="display:none;text-align:center;padding:40px 20px">
+            <div style="width:56px;height:56px;border-radius:50%;background:#F0FBF4;border:2px solid #25D366;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4 10-10" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 style="font-family:var(--f-disp);font-size:20px;font-weight:700;margin-bottom:8px">Anfrage gesendet!</h3>
+            <p style="font-size:14px;color:var(--muted);font-weight:300">Wir melden uns innerhalb von 24 Stunden.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- ══════════ KUNDENSTORIES ══════════ -->
+<div class="page" id="page-kampagnen"><div class="page-wrap">
+  <section class="hero bg-paper" style="min-height:60vh"><div class="hero-grid-bg"></div><div class="inner"><div class="hero-content"><span class="hero-eye">Kundenstories</span><h1><span class="hl"><span>Werbe-</span></span><span class="hl"><span class="blue-word">kampagnen.</span></span></h1><div class="hero-bottom"><p class="hero-sub">Echte Ergebnisse aus echten Kampagnen — transparent und nachvollziehbar.</p></div></div></div></section>
+  <section class="bg-white"><div class="inner"><div class="s-head center rv"><span class="eyebrow">Case Studies</span><h2>Unsere Ergebnisse.</h2><p class="s-head-sub">Platzhalter — hier kommen deine echten Kampagnen-Ergebnisse.</p></div><div class="vis-ph rv" style="min-height:300px"><span class="vis-ph-label">Kampagnen Case Studies</span></div></div></section>
+  <section class="bg-ink cta-s"><div class="inner"><h2 class="rv">Ähnliche Ergebnisse für dein Business?</h2><p class="rv d1">Lass uns über deine Ziele sprechen.</p><button class="btn-white-inv rv d2" onclick="go('kontakt')">Kontakt aufnehmen</button></div></section>
+</div></div>
+
+<div class="page" id="page-stimmen"><div class="page-wrap">
+  <section class="hero bg-paper" style="min-height:60vh"><div class="hero-grid-bg"></div><div class="inner"><div class="hero-content"><span class="hero-eye">Kundenstories</span><h1><span class="hl"><span>Kunden-</span></span><span class="hl"><span class="blue-word">stimmen.</span></span></h1><div class="hero-bottom"><p class="hero-sub">Was unsere Kunden über die Zusammenarbeit mit Foundryone sagen.</p></div></div></div></section>
+  <section class="bg-white"><div class="inner"><div class="s-head center rv"><span class="eyebrow">Testimonials</span><h2>Das sagen unsere Kunden.</h2></div><div class="vis-ph rv" style="min-height:300px"><span class="vis-ph-label">Kundenstimmen / Testimonials</span></div></div></section>
+  <section class="bg-ink cta-s"><div class="inner"><h2 class="rv">Werde der nächste Erfolg.</h2><button class="btn-white-inv rv d1" onclick="go('kontakt')">Kontakt aufnehmen</button></div></section>
+</div></div>
+
+<div class="page" id="page-portfolio"><div class="page-wrap">
+  <section class="hero bg-paper" style="min-height:60vh"><div class="hero-grid-bg"></div><div class="inner"><div class="hero-content"><span class="hero-eye">Kundenstories</span><h1><span class="hl"><span>Websites</span></span><span class="hl"><span class="blue-word">Portfolio.</span></span></h1><div class="hero-bottom"><p class="hero-sub">Websites, die wir für unsere Kunden gebaut haben — performant und konversionsstark.</p></div></div></div></section>
+  <section class="bg-white"><div class="inner"><div class="s-head center rv"><span class="eyebrow">Portfolio</span><h2>Unsere Webprojekte.</h2></div><div class="vis-ph rv" style="min-height:300px"><span class="vis-ph-label">Website Portfolio</span></div></div></section>
+  <section class="bg-ink cta-s"><div class="inner"><h2 class="rv">Deine neue Website?</h2><button class="btn-white-inv rv d1" onclick="go('kontakt')">Kontakt aufnehmen</button></div></section>
+</div></div>
+
+<div class="page" id="page-bewertungen"><div class="page-wrap">
+  <section class="hero bg-paper" style="min-height:60vh"><div class="hero-grid-bg"></div><div class="inner"><div class="hero-content"><span class="hero-eye">Kundenstories</span><h1><span class="hl"><span>Kunden-</span></span><span class="hl"><span class="blue-word">bewertungen.</span></span></h1><div class="hero-bottom"><p class="hero-sub">Echte Bewertungen von echten Kunden — ungefiltert und transparent.</p></div></div></div></section>
+  <section class="bg-white"><div class="inner"><div class="s-head center rv"><span class="eyebrow">Reviews</span><h2>Was Kunden bewerten.</h2></div><div class="vis-ph rv" style="min-height:300px"><span class="vis-ph-label">Google / Trustpilot Bewertungen</span></div></div></section>
+  <section class="bg-ink cta-s"><div class="inner"><h2 class="rv">Überzeuge dich selbst.</h2><button class="btn-white-inv rv d1" onclick="go('kontakt')">Kontakt aufnehmen</button></div></section>
+</div></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-logo">Foundryone</div>
+      <p class="ft-tag">Performance Marketing, das messbare Ergebnisse liefert. Google Ads. Meta Ads. Creatives.</p>
+    </div>
+    <div class="ft-col">
+      <h5>Leistungen</h5>
+      <ul>
+        <li><a onclick="go('google')">Google Ads</a></li>
+        <li><a onclick="go('meta')">Meta Ads</a></li>
+        <li><a onclick="go('meta')">Ad Creatives</a></li>
+        <li><a onclick="go('preise')">Preise & Rechner</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Kundenstories</h5>
+      <ul>
+        <li><a onclick="go('kampagnen')">Werbekampagnen</a></li>
+        <li><a onclick="go('stimmen')">Kundenstimmen</a></li>
+        <li><a onclick="go('portfolio')">Websites Portfolio</a></li>
+        <li><a onclick="go('bewertungen')">Kundenbewertungen</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Unternehmen</h5>
+      <ul>
+        <li><a onclick="go('ueber-uns')">Über Uns</a></li>
+        <li><a onclick="go('kontakt')">Kontakt</a></li>
+        <li>Datenschutz</li>
+        <li>Impressum</li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Kontakt</h5>
+      <ul>
+        <li><a href="/cdn-cgi/l/email-protection#620a070e0e0d22040d170c06101b0d0c074c0607"><span class="__cf_email__" data-cfemail="e38b868f8f8ca3858c968d87919a8c8d86cd8786">[email&#160;protected]</span></a></li>
+        <li><a href="https://wa.me/49XXXXXXXXXX" target="_blank">WhatsApp schreiben</a></li>
+        <li><a onclick="go('kontakt')">Kontaktformular</a></li>
+        <li><a onclick="go('kontakt')">Erstgespräch buchen</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2025 Foundryone. Alle Rechte vorbehalten.</span>
+    <span>Performance Marketing Agentur</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="./script.js"></script>
+</body>
+</html>
