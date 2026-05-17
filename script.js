@@ -1,5 +1,17 @@
 // ─── NAVIGATION ───────────────────────────────
 let cur = 'home';
+const THEME_KEY = 'foundryone-theme';
+
+function applyTheme(theme) {
+  document.body.setAttribute('data-theme', theme);
+}
+
+function toggleTheme() {
+  const current = document.body.getAttribute('data-theme') || 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  localStorage.setItem(THEME_KEY, next);
+}
 
 function go(page) {
   if (page === cur) {
@@ -170,7 +182,7 @@ function updCalc() {
     dr.style.display = '';
     const saved = Math.round((multipliers[1] - multipliers[dur]) * baseFeeRef);
     animVal(document.getElementById('rv-disc'), '−' + nf(saved) + ' vs. Flexibel');
-    document.getElementById('rv-disc').style.color = '#34C759';
+    document.getElementById('rv-disc').style.color = 'var(--blue)';
   } else {
     dr.style.display = 'none';
   }
@@ -256,6 +268,8 @@ function submitKontakt(e) {
 
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+  applyTheme(savedTheme);
   updateNavLinks();
   initReveal();
   initCounters();
