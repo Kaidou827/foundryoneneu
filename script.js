@@ -1,6 +1,43 @@
 // ─── NAVIGATION ───────────────────────────────
 let cur = 'home';
 const THEME_KEY = 'foundryone-theme';
+const COOKIE_CONSENT_KEY = 'cookie-consent-choice';
+
+function hasAcceptedCookies() {
+  return localStorage.getItem(COOKIE_CONSENT_KEY) === 'accepted';
+}
+
+function trackPixelEvent(type, name, payload) {
+  if (typeof window.fbq !== 'function') return;
+  if (type === 'trackCustom') {
+    window.fbq('trackCustom', name, payload || {});
+    return;
+  }
+  window.fbq('track', name, payload || {});
+}
+
+function acceptCookies() {
+  localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.classList.add('is-hidden');
+}
+
+function rejectCookies() {
+  localStorage.setItem(COOKIE_CONSENT_KEY, 'rejected');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.classList.add('is-hidden');
+}
+
+function initCookieBanner() {
+  const banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+  if (!consent) {
+    banner.classList.remove('is-hidden');
+    return;
+  }
+  banner.classList.add('is-hidden');
+}
 
 function applyTheme(theme) {
   document.body.setAttribute('data-theme', theme);
@@ -28,6 +65,9 @@ function go(page) {
 
   // Show skeleton only when navigating to Preise
   if (page === 'preise') skel.classList.add('show');
+  if (page === 'kontakt' && hasAcceptedCookies()) {
+    trackPixelEvent('trackCustom', 'NavigateKontakt');
+  }
   cur = page;
 
   setTimeout(() => {
@@ -204,6 +244,9 @@ function updCalc() {
 
 // ─── MODAL ────────────────────────────────────
 function openModal() {
+  if (hasAcceptedCookies()) {
+    trackPixelEvent('trackCustom', 'OpenBudgetModal');
+  }
   showOptions();
   const ov = document.getElementById('modal-overlay');
   const bx = document.getElementById('modal-box');
@@ -252,6 +295,9 @@ function showForm() {
 
 function submitForm(e) {
   e.preventDefault();
+  if (hasAcceptedCookies()) {
+    trackPixelEvent('track', 'Lead');
+  }
   document.getElementById('modal-form').style.display = 'none';
   document.getElementById('modal-success').style.display = 'block';
 }
@@ -262,6 +308,9 @@ document.addEventListener('keydown', e => {
 
 function submitKontakt(e) {
   e.preventDefault();
+  if (hasAcceptedCookies()) {
+    trackPixelEvent('track', 'Lead');
+  }
   document.getElementById('kontakt-form-el').style.display = 'none';
   document.getElementById('kontakt-success').style.display = 'block';
 }
@@ -270,6 +319,7 @@ function submitKontakt(e) {
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
   applyTheme(savedTheme);
+  initCookieBanner();
   updateNavLinks();
   initReveal();
   initCounters();

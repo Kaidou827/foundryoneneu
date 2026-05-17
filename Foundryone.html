@@ -4,9 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Foundryone — Performance Marketing</title>
+<link rel="icon" type="image/png" href="./icon_white.png">
 <link rel="stylesheet" href="./styles.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1556322352741442');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
 </head>
 <body data-theme="light">
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1556322352741442&ev=PageView&noscript=1"
+/></noscript>
 
 <!-- ══ CONTACT MODAL ══ -->
 <div id="modal-overlay" style="
@@ -139,7 +157,10 @@
 <!-- nav -->
 <nav>
   <div class="nav-in">
-    <span class="logo" onclick="go('home')">Foundryone</span>
+    <span class="logo" onclick="go('home')">
+      <img class="logo-img logo-light" src="./LOGO_BLACK.png" alt="Foundryone logo">
+      <img class="logo-img logo-dark" src="./LOGO_WHITE.png" alt="Foundryone logo">
+    </span>
     <ul class="nav-links">
       <li><a onclick="go('home')" data-p="home">Home</a></li>
 
@@ -987,7 +1008,10 @@
 <footer>
   <div class="ft-grid">
     <div>
-      <div class="ft-logo">Foundryone</div>
+      <div class="ft-logo">
+        <img class="logo-img logo-light" src="./LOGO_BLACK.png" alt="Foundryone logo">
+        <img class="logo-img logo-dark" src="./LOGO_WHITE.png" alt="Foundryone logo">
+      </div>
       <p class="ft-tag">Performance Marketing, das messbare Ergebnisse liefert. Google Ads. Meta Ads. Creatives.</p>
     </div>
     <div class="ft-col">
@@ -1013,8 +1037,8 @@
       <ul>
         <li><a onclick="go('ueber-uns')">Über Uns</a></li>
         <li><a onclick="go('kontakt')">Kontakt</a></li>
-        <li>Datenschutz</li>
-        <li>Impressum</li>
+        <li><a id="footer-datenschutz" href="#">Datenschutz</a></li>
+        <li><a id="footer-impressum" href="#">Impressum</a></li>
       </ul>
     </div>
     <div class="ft-col">
@@ -1032,6 +1056,20 @@
     <span>Performance Marketing Agentur</span>
   </div>
 </footer>
+
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie Einstellungen">
+  <div class="cookie-content">
+    <p class="cookie-title">Cookies & Tracking</p>
+    <p class="cookie-text">
+      Wir verwenden Cookies und Meta Pixel für Analyse- und Marketingzwecke. Mehr Infos in
+      <a href="#footer-datenschutz">Datenschutz</a> und <a href="#footer-impressum">Impressum</a>.
+    </p>
+    <div class="cookie-actions">
+      <button type="button" class="btn-outline cookie-btn" onclick="rejectCookies()">Ablehnen</button>
+      <button type="button" class="btn-ink cookie-btn" onclick="acceptCookies()">Akzeptieren</button>
+    </div>
+  </div>
+</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="./script.js"></script>
