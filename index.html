@@ -235,23 +235,48 @@
 <div class="page-wrap in">
 
   <!-- HERO -->
-  <section class="hero bg-paper">
+  <section class="hero bg-paper hero-centered">
     <div class="hero-grid-bg"></div>
     <div class="inner">
-      <div class="hero-content">
+      <div class="hero-center-wrap">
+
         <span class="hero-eye">Performance Marketing Agentur</span>
+
         <h1>
           <span class="hl"><span>Wachstum,</span></span>
           <span class="hl"><span>das sich</span></span>
           <span class="hl"><span class="blue-word">rechnet.</span></span>
         </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub">Wir skalieren dein Business mit Google Ads und Meta Ads — datengetrieben, präzise, messbar. Kein Budgetverschwendung. Nur Ergebnisse.</p>
-          <div class="hero-ctas">
-            <button class="btn-ink" onclick="openModal()">Budget berechnen</button>
-            <button class="btn-outline" onclick="go('google')">Leistungen</button>
+
+        <p class="hero-sub">Wir skalieren dein Business mit Google Ads und Meta Ads —<br>datengetrieben, präzise, messbar. Keine Budgetverschwendung.</p>
+
+        <div class="hero-pricing-row rv d1">
+          <div class="hpc-item">
+            <span class="hpc-badge">Einmalig</span>
+            <p class="hpc-price">499 €</p>
+            <p class="hpc-label">Setup pro Account</p>
+            <p class="hpc-desc">Komplette Einrichtung &amp; Kampagnen-Setup</p>
+          </div>
+          <div class="hpc-divider"></div>
+          <div class="hpc-item">
+            <span class="hpc-badge">Monatlich</span>
+            <p class="hpc-price">299 €</p>
+            <p class="hpc-label">Management-Fee</p>
+            <p class="hpc-desc">Laufende Optimierung &amp; Betreuung von Google &amp; Meta Ads</p>
+          </div>
+          <div class="hpc-divider"></div>
+          <div class="hpc-item hpc-note-item">
+            <span class="hpc-badge hpc-badge-muted">Hinweis</span>
+            <p class="hpc-label">Ad Spend separat</p>
+            <p class="hpc-desc">Das Werbebudget zahlst du direkt an Google &amp; Meta — es ist nicht in unserer Gebühr enthalten.</p>
           </div>
         </div>
+
+        <div class="hero-ctas hero-ctas-center rv d2">
+          <button class="btn-ink" onclick="openModal()">Jetzt anfragen</button>
+          <button class="btn-outline" onclick="go('preise')">Preise ansehen</button>
+        </div>
+
       </div>
     </div>
   </section>
@@ -349,6 +374,7 @@
       <h2 class="rv">Bereit für<br>messbare Ergebnisse?</h2>
       <p class="rv d1">Buche jetzt dein kostenloses Erstgespräch — wir analysieren dein Business und zeigen konkrete Potenziale auf.</p>
       <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+      <p class="price-note rv d3">Transparente Preise: 299 € / Monat Management Fee + 499 € Setup je Account. Werbebudget ist nicht enthalten.</p>
     </div>
   </section>
 
@@ -484,6 +510,7 @@
       <h2 class="rv">Google Ads,<br>die sich auszahlen.</h2>
       <p class="rv d1">Starte jetzt mit einer kostenlosen Analyse deines Kontos — oder starte komplett neu mit uns.</p>
       <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+      <p class="price-note rv d3">Neukunden-Konditionen: 299 € / Monat + 499 € einmaliges Setup je Account. Ad Spend zahlst du direkt an Google.</p>
     </div>
   </section>
 
@@ -601,6 +628,7 @@
       <h2 class="rv">Meta Ads, die<br>wirklich konvertieren.</h2>
       <p class="rv d1">Lass uns gemeinsam eine Creative-Strategie entwickeln, die dein Budget in messbare Ergebnisse verwandelt.</p>
       <button class="btn-white-inv rv d2" onclick="openModal()">Budget berechnen</button>
+      <p class="price-note rv d3">Neukunden-Konditionen: 299 € / Monat + 499 € einmaliges Setup je Account. Ad Spend zahlst du direkt an Meta.</p>
     </div>
   </section>
 
@@ -614,8 +642,8 @@
   <section class="bg-paper" style="padding-top:100px;padding-bottom:60px">
     <div class="inner">
       <span class="eyebrow rv">Transparente Preise</span>
-      <h1 class="rv d1" style="font-family:var(--f-disp);font-size:clamp(48px,6vw,88px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px">Berechne<br>dein Budget.</h1>
-      <p class="rv d2" style="font-size:17px;color:var(--muted);font-weight:300;max-width:400px;line-height:1.6">Konfiguriere dein Paket. Alle Preise sind Richtwerte — individuelle Angebote auf Anfrage.</p>
+      <h1 class="rv d1" style="font-family:var(--f-disp);font-size:clamp(48px,6vw,88px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px">Klare Preise.<br>Keine Überraschungen.</h1>
+      <p class="rv d2" style="font-size:17px;color:var(--muted);font-weight:300;max-width:580px;line-height:1.6">Monatliche Management Fee: <strong>299 €</strong>. Einmaliges Setup: <strong>499 € je Account</strong>. Das Werbebudget (Ad Spend) ist <strong>nicht</strong> enthalten und wird direkt an Google bzw. Meta gezahlt.</p>
     </div>
   </section>
 
@@ -634,7 +662,7 @@
           </div>
 
           <div class="calc-block rv d1">
-            <p class="calc-lbl">Monatliches Werbebudget</p>
+            <p class="calc-lbl">Geplantes Werbebudget (nicht enthalten)</p>
             <div class="slider-val" id="bval">2.000 €</div>
             <input type="range" id="bslider" min="500" max="50000" step="500" value="2000" oninput="updCalc()">
             <div class="range-labels"><span>500 €</span><span>50.000 €</span></div>
@@ -657,37 +685,37 @@
           <div class="r-card">
             <div class="r-card-head">
               <h3>Dein Angebot</h3>
-              <p>Monatliche Gesamtkosten</p>
+              <p>Agenturkosten (ohne Werbebudget)</p>
             </div>
             <div class="r-card-body">
               <div class="r-row">
-                <span class="rl">Werbebudget / Monat</span>
+                <span class="rl">Geplantes Werbebudget / Monat (direkt an Plattform)</span>
                 <span class="rv-val" id="rv-bud">2.000 €</span>
               </div>
               <div class="r-row">
                 <span class="rl">Agentur-Fee / Monat</span>
-                <span class="rv-val" id="rv-fee">800 €</span>
+                <span class="rv-val" id="rv-fee">299 €</span>
               </div>
               <div class="r-row">
-                <span class="rl">Einrichtungsgebühr <span style="font-size:11px;background:rgba(21,71,232,.1);color:var(--blue);border-radius:4px;padding:2px 6px;font-weight:500">einmalig</span></span>
-                <span class="rv-val" id="rv-setup">500 €</span>
+                <span class="rl">Setup je Account <span style="font-size:11px;background:var(--blue-lt);color:var(--blue);border-radius:4px;padding:2px 6px;font-weight:500">einmalig</span></span>
+                <span class="rv-val" id="rv-setup">499 €</span>
               </div>
-              <div class="r-row" id="rd-row" style="display:none">
-                <span class="rl" style="color:var(--blue);font-weight:500">Rabatt (12 Monate)</span>
-                <span class="rv-val" id="rv-disc" style="color:var(--blue)">−0 €</span>
+              <div class="r-row" id="rd-row">
+                <span class="rl" style="color:var(--blue);font-weight:500">Wichtiger Hinweis</span>
+                <span class="rv-val" id="rv-disc" style="color:var(--blue)">Ad Spend nicht enthalten</span>
               </div>
               <div class="r-row big">
-                <span class="rl">Gesamt / Monat</span>
-                <span class="rv-val" id="rv-mo">2.800 €</span>
+                <span class="rl">Agenturkosten / Monat</span>
+                <span class="rv-val" id="rv-mo">299 €</span>
               </div>
               <div class="r-row" id="rv-tot-row">
                 <span class="rl" id="rv-tot-lbl">Gesamtinvestition (3 Monate)</span>
-                <span class="rv-val" id="rv-tot">8.900 €</span>
+                <span class="rv-val" id="rv-tot">1.396 €</span>
               </div>
             </div>
             <div class="r-card-foot">
               <button class="btn-ink" style="width:100%;justify-content:center" onclick="window.location='mailto:hello@foundryone.de'">Unverbindlich anfragen</button>
-              <p style="margin-top:14px">Individuelle Angebote auf Anfrage. Kein Einrichtungs-Fee.</p>
+              <p style="margin-top:14px">Transparent für Neukunden: 299 € / Monat Management Fee + 499 € Setup je Account. Werbebudget ist nicht enthalten.</p>
             </div>
           </div>
         </div>
@@ -705,18 +733,44 @@
       <div class="info-grid">
         <div class="info-item rv">
           <span class="info-tag">Agentur-Fee</span>
-          <h4>15% vom Werbebudget</h4>
-          <p>Mindestens 500 €/Monat. Die Fee deckt Strategie, Kampagnen-Management, Reporting und laufende Optimierung ab.</p>
+          <h4>299 € / Monat</h4>
+          <p>Fixe monatliche Betreuung für Strategie, Kampagnen-Management, Reporting und Optimierung.</p>
         </div>
         <div class="info-item rv d1">
-          <span class="info-tag">Laufzeitrabatt</span>
-          <h4>10% bei 12 Monaten</h4>
-          <p>Wer langfristig plant, spart. Bei 12 Monaten Laufzeit gewähren wir 10% Rabatt auf die gesamte Agentur-Fee.</p>
+          <span class="info-tag">Setup</span>
+          <h4>499 € je Account (einmalig)</h4>
+          <p>Einmaliges Setup für Account-Struktur, Kampagnen-Architektur, Tracking und sauberen Start.</p>
         </div>
         <div class="info-item rv d2">
-          <span class="info-tag">Inklusive</span>
-          <h4>Setup & Onboarding</h4>
-          <p>Kein Einrichtungs-Fee. Tracking-Setup, Kampagnen-Struktur und Strategie sind im ersten Monat enthalten.</p>
+          <span class="info-tag">Ad Spend</span>
+          <h4>Nicht in den Gebühren enthalten</h4>
+          <p>Das Werbebudget wird vom Kunden separat bereitgestellt und direkt an Google/Meta gezahlt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper">
+    <div class="inner">
+      <div class="s-head rv">
+        <span class="eyebrow">FAQ für Neukunden</span>
+        <h2>Preise auf einen Blick.</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item rv">
+          <span class="info-tag">Was kostet die Betreuung?</span>
+          <h4>299 € pro Monat</h4>
+          <p>Die monatliche Management Fee beträgt fix 299 € und gilt für die laufende Betreuung.</p>
+        </div>
+        <div class="info-item rv d1">
+          <span class="info-tag">Was kostet das Setup?</span>
+          <h4>499 € je Account</h4>
+          <p>Das Setup wird einmalig pro Account berechnet (z. B. Google Ads Account und/oder Meta Ads Account).</p>
+        </div>
+        <div class="info-item rv d2">
+          <span class="info-tag">Ist Werbebudget enthalten?</span>
+          <h4>Nein</h4>
+          <p>Der Ad Spend ist separat und wird direkt an die Plattformen gezahlt, nicht an uns.</p>
         </div>
       </div>
     </div>
@@ -727,6 +781,7 @@
       <h2 class="rv">Lass uns<br>loslegen.</h2>
       <p class="rv d1">Buche dein kostenloses Erstgespräch. 30 Minuten — konkrete Potenziale, klare nächste Schritte.</p>
       <a href="/cdn-cgi/l/email-protection#523a373e3e3d12343d273c36202b3d3c377c3637" class="btn-white-inv rv d2"><span class="__cf_email__" data-cfemail="a6cec3cacac9e6c0c9d3c8c2d4dfc9c8c388c2c3">[email&#160;protected]</span></a>
+      <p class="price-note rv d3">299 € / Monat + 499 € Setup je Account. Das Werbebudget ist nicht enthalten.</p>
     </div>
   </section>
 

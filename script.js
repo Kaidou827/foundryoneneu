@@ -180,16 +180,11 @@ function updCalc() {
   sl.style.setProperty('--p', pct + '%');
   document.getElementById('bval').textContent = nf(bud);
 
-  // Fee multiplier by duration — longer = cheaper per month
-  const multipliers = { 1: 1.20, 3: 1.00, 6: 0.95, 12: 0.90 };
-  let baseFee = Math.max(bud * 0.15, 800);
-  if (svc === 'beide') baseFee = Math.max(bud * 0.20, 1200);
-  const fee = baseFee * multipliers[dur];
-
-  // Setup fee: 500€ per platform (einmalig)
-  const setup = svc === 'beide' ? 1000 : 500;
-
-  const mo = bud + fee;
+  // Fixed and transparent pricing model
+  const accountCount = svc === 'beide' ? 2 : 1;
+  const fee = 299;
+  const setup = 499 * accountCount;
+  const mo = fee; // Ad spend is excluded from agency fees
   const tot = mo * dur + setup;
 
   // Animate values
@@ -197,31 +192,21 @@ function updCalc() {
   animVal(document.getElementById('rv-fee'), nf(fee));
   animVal(document.getElementById('rv-setup'), nf(setup));
   animVal(document.getElementById('rv-mo'), nf(mo));
-  animVal(document.getElementById('rv-tot'), dur === 1 ? nf(mo + setup) : nf(tot));
-
-  // Savings vs Flexibel row
-  const dr = document.getElementById('rd-row');
-  const baseFeeRef = svc === 'beide' ? Math.max(bud * 0.20, 1200) : Math.max(bud * 0.15, 800);
-  if (dur > 1) {
-    dr.style.display = '';
-    const saved = Math.round((multipliers[1] - multipliers[dur]) * baseFeeRef);
-    animVal(document.getElementById('rv-disc'), '−' + nf(saved) + ' vs. Flexibel');
-    document.getElementById('rv-disc').style.color = 'var(--blue)';
-  } else {
-    dr.style.display = 'none';
-  }
+  animVal(document.getElementById('rv-tot'), dur === 1 ? nf(setup + mo) : nf(tot));
+  animVal(document.getElementById('rv-disc'), 'Ad Spend nicht enthalten');
+  document.getElementById('rv-disc').style.color = 'var(--blue)';
 
   // Total label
   document.getElementById('rv-tot-lbl').textContent = dur === 1
-    ? 'Gesamtkosten (1. Monat inkl. Setup)'
-    : `Gesamtinvestition (${dur} Monate inkl. Setup)`;
+    ? 'Gesamte Agenturkosten (1. Monat inkl. Setup)'
+    : `Gesamte Agenturkosten (${dur} Monate inkl. Setup)`;
 
   // Hint texts
   const hints = {
-    1: '⚠ Flexibel = +20 % auf Agentur-Fee. Monatlich kündbar, aber teurer.',
-    3: 'Standardpreis — 3 Monate Mindestlaufzeit.',
-    6: '✓ 5 % günstiger als Flexibel. 6 Monate Laufzeit.',
-    12: '✓ 10 % günstiger als Flexibel. Bestes Preis-Leistungs-Verhältnis.'
+    1: 'Fixe Agenturgebühr: 299 € / Monat.',
+    3: 'Setup: 499 € pro Account (einmalig).',
+    6: 'Ad Spend ist nicht enthalten und wird direkt an Google/Meta gezahlt.',
+    12: 'Volle Kostentransparenz für Neukunden ohne Prozentmodell.'
   };
   document.getElementById('disc-msg').textContent = hints[dur] || '';
 }
