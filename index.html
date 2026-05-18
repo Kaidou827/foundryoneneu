@@ -174,32 +174,6 @@
         </div>
       </li>
 
-      <!-- Kundenstories Dropdown -->
-      <li>
-        <a data-p-group="kundenstories" style="cursor:default">
-          Kundenstories
-          <span class="nav-chevron"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-        </a>
-        <div class="nav-dropdown">
-          <a class="dd-item" onclick="go('kampagnen')">
-            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10l3-3 2 2 4-5 3 2" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div><div class="dd-label">Werbekampagnen</div><div class="dd-sub">Unsere Ergebnisse</div></div>
-          </a>
-          <a class="dd-item" onclick="go('stimmen')">
-            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 5h10M3 8h7M3 11h5" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-            <div><div class="dd-label">Kundenstimmen</div><div class="dd-sub">Was Kunden sagen</div></div>
-          </a>
-          <a class="dd-item" onclick="go('portfolio')">
-            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="2" stroke="var(--blue)" stroke-width="1.4"/><path d="M5 3V2M11 3V2" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-            <div><div class="dd-label">Websites Portfolio</div><div class="dd-sub">Unsere Webprojekte</div></div>
-          </a>
-          <a class="dd-item" onclick="go('bewertungen')">
-            <div class="dd-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3.5H13l-2.8 2 1 3.5L8 9.2 4.8 11l1-3.5L3 5.5h3.5z" stroke="var(--blue)" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
-            <div><div class="dd-label">Kundenbewertungen</div><div class="dd-sub">Ratings &amp; Reviews</div></div>
-          </a>
-        </div>
-      </li>
-
       <li><a onclick="go('ueber-uns')" data-p="ueber-uns">Über Uns</a></li>
     </ul>
     <button class="nav-pill" onclick="go('kontakt')">Kontakt aufnehmen</button>
@@ -221,11 +195,6 @@
   <a onclick="go('meta');closeMob()" data-p="meta" style="padding-left:12px">Meta Ads</a>
   <a onclick="go('creatives');closeMob()" style="padding-left:12px">Ad Creatives</a>
   <a onclick="go('preise');closeMob()" data-p="preise" style="padding-left:12px">Preise & Rechner</a>
-  <div style="padding:12px 0 4px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Kundenstories</div>
-  <a onclick="go('kampagnen');closeMob()" style="padding-left:12px">Werbekampagnen</a>
-  <a onclick="go('stimmen');closeMob()" style="padding-left:12px">Kundenstimmen</a>
-  <a onclick="go('portfolio');closeMob()" style="padding-left:12px">Websites Portfolio</a>
-  <a onclick="go('bewertungen');closeMob()" style="padding-left:12px">Kundenbewertungen</a>
   <a onclick="go('ueber-uns');closeMob()" data-p="ueber-uns">Über Uns</a>
   <button class="mob-cta-btn" onclick="go('kontakt');closeMob()">Kontakt aufnehmen</button>
 </div>
@@ -385,22 +354,45 @@
 <div class="page" id="page-google">
 <div class="page-wrap">
 
-  <section class="hero bg-paper" style="min-height:72vh">
+  <section class="hero bg-paper hero-sub-page">
     <div class="hero-grid-bg"></div>
     <div class="inner">
-      <div class="hero-content">
-        <span class="hero-eye">Google Ads</span>
-        <h1>
-          <span class="hl"><span>Ganz oben.</span></span>
-          <span class="hl"><span>Zur richtigen</span></span>
-          <span class="hl"><span class="blue-word">Zeit.</span></span>
-        </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub">Wenn potenzielle Kunden suchen, bist du da. Mit präzisen Google Ads-Kampagnen, die den gesamten Kaufzyklus abdecken.</p>
+      <div class="hero-sub-layout">
+
+        <div class="hero-sub-left">
+          <span class="hero-eye">Google Ads</span>
+          <h1>
+            <span class="hl"><span>Gefunden werden,</span></span>
+            <span class="hl"><span>wenn es</span></span>
+            <span class="hl"><span class="blue-word">darauf ankommt.</span></span>
+          </h1>
+          <p class="hero-sub">Search, Shopping, Display & Performance Max — datengetrieben optimiert, damit dein Budget wirklich arbeitet.</p>
           <div class="hero-ctas">
             <button class="btn-ink" onclick="openModal()">Jetzt starten</button>
           </div>
         </div>
+
+        <div class="hero-sub-right rv d1">
+          <div class="sub-price-card">
+            <p class="sub-price-kicker">Google Ads Betreuung</p>
+            <div class="sub-price-row">
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Einmalig</span>
+                <p class="sub-price-num">499 €</p>
+                <p class="sub-price-label">Setup</p>
+              </div>
+              <div class="sub-price-sep"></div>
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Monatlich</span>
+                <p class="sub-price-num">299 €</p>
+                <p class="sub-price-label">Management</p>
+              </div>
+            </div>
+            <p class="sub-price-note">Ad Spend zahlst du direkt an Google — nicht inbegriffen.</p>
+            <button class="btn-ink" style="width:100%;justify-content:center;margin-top:14px" onclick="openModal()">Jetzt anfragen</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -521,22 +513,45 @@
 <div class="page" id="page-meta">
 <div class="page-wrap">
 
-  <section class="hero bg-paper" style="min-height:72vh">
+  <section class="hero bg-paper hero-sub-page">
     <div class="hero-grid-bg"></div>
     <div class="inner">
-      <div class="hero-content">
-        <span class="hero-eye">Meta Ads</span>
-        <h1>
-          <span class="hl"><span>Kreativität</span></span>
-          <span class="hl"><span>trifft</span></span>
-          <span class="hl"><span class="blue-word">Conversion.</span></span>
-        </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub">Facebook und Instagram Kampagnen, die nicht nur auffallen, sondern verkaufen. Creative-First. Datengesteuert. Skalierbar.</p>
+      <div class="hero-sub-layout">
+
+        <div class="hero-sub-left">
+          <span class="hero-eye">Meta Ads</span>
+          <h1>
+            <span class="hl"><span>Facebook &amp; Instagram</span></span>
+            <span class="hl"><span>Werbung, die</span></span>
+            <span class="hl"><span class="blue-word">verkauft.</span></span>
+          </h1>
+          <p class="hero-sub">Creative-First Kampagnen auf Facebook & Instagram — datengetrieben optimiert für Conversions, Leads und Skalierung.</p>
           <div class="hero-ctas">
             <button class="btn-ink" onclick="openModal()">Jetzt starten</button>
           </div>
         </div>
+
+        <div class="hero-sub-right rv d1">
+          <div class="sub-price-card">
+            <p class="sub-price-kicker">Meta Ads Betreuung</p>
+            <div class="sub-price-row">
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Einmalig</span>
+                <p class="sub-price-num">499 €</p>
+                <p class="sub-price-label">Setup</p>
+              </div>
+              <div class="sub-price-sep"></div>
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Monatlich</span>
+                <p class="sub-price-num">299 €</p>
+                <p class="sub-price-label">Management</p>
+              </div>
+            </div>
+            <p class="sub-price-note">Ad Spend zahlst du direkt an Meta — nicht inbegriffen.</p>
+            <button class="btn-ink" style="width:100%;justify-content:center;margin-top:14px" onclick="openModal()">Jetzt anfragen</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -792,22 +807,45 @@
 <div class="page" id="page-creatives">
 <div class="page-wrap">
 
-  <section class="hero bg-paper" style="min-height:72vh">
+  <section class="hero bg-paper hero-sub-page">
     <div class="hero-grid-bg"></div>
     <div class="inner">
-      <div class="hero-content">
-        <span class="hero-eye">Ad Creatives</span>
-        <h1>
-          <span class="hl"><span>Werbemittel,</span></span>
-          <span class="hl"><span>die</span></span>
-          <span class="hl"><span class="blue-word">konvertieren.</span></span>
-        </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub">Creatives, die im Feed stoppen, Emotionen auslösen und Klicks erzeugen — entwickelt mit Performance-Fokus, iteriert auf Basis echter Daten.</p>
+      <div class="hero-sub-layout">
+
+        <div class="hero-sub-left">
+          <span class="hero-eye">Ad Creatives</span>
+          <h1>
+            <span class="hl"><span>Werbemittel, die</span></span>
+            <span class="hl"><span>im Feed</span></span>
+            <span class="hl"><span class="blue-word">stoppen.</span></span>
+          </h1>
+          <p class="hero-sub">Static, Video, UGC-Style — Performance-Creatives für Google & Meta, iteriert auf Basis echter Daten.</p>
           <div class="hero-ctas">
-            <button class="btn-ink" onclick="go('kontakt')">Kontakt aufnehmen</button>
+            <button class="btn-ink" onclick="openModal()">Jetzt anfragen</button>
           </div>
         </div>
+
+        <div class="hero-sub-right rv d1">
+          <div class="sub-price-card">
+            <p class="sub-price-kicker">Ad Creatives im Paket</p>
+            <div class="sub-price-row">
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Einmalig</span>
+                <p class="sub-price-num">499 €</p>
+                <p class="sub-price-label">Setup</p>
+              </div>
+              <div class="sub-price-sep"></div>
+              <div class="sub-price-block">
+                <span class="sub-price-badge">Monatlich</span>
+                <p class="sub-price-num">299 €</p>
+                <p class="sub-price-label">Management</p>
+              </div>
+            </div>
+            <p class="sub-price-note">Creative-Produktion inklusive. Ad Spend zahlst du direkt an die Plattformen.</p>
+            <button class="btn-ink" style="width:100%;justify-content:center;margin-top:14px" onclick="openModal()">Jetzt anfragen</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -880,7 +918,8 @@
     <div class="inner">
       <h2 class="rv">Creatives, die<br>wirklich performen.</h2>
       <p class="rv d1">Lass uns gemeinsam Werbemittel entwickeln, die dein Budget in Ergebnisse verwandeln.</p>
-      <button class="btn-white-inv rv d2" onclick="go('kontakt')">Kontakt aufnehmen</button>
+      <button class="btn-white-inv rv d2" onclick="openModal()">Jetzt anfragen</button>
+      <p class="price-note rv d3">Neukunden-Konditionen: 299 € / Monat + 499 € einmaliges Setup je Account. Ad Spend zahlst du direkt an die Plattformen.</p>
     </div>
   </section>
 
@@ -1090,7 +1129,7 @@
     </div>
   </div>
   <div class="ft-bottom">
-    <span>© 2025 Foundryone. Alle Rechte vorbehalten.</span>
+    <span>© 2026 Foundryone. Alle Rechte vorbehalten.</span>
     <span>Performance Marketing Agentur</span>
   </div>
 </footer>
