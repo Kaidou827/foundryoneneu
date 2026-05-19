@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preise | Foundryone</title>
+  <link rel="icon" type="image/png" href="./icon_white.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body data-theme="light" class="page-preise">
+  <nav><div class="nav-in"><a class="logo" href="index.html"><img class="logo-img logo-light" src="./LOGO_BLACK.png" alt="Foundryone logo"><img class="logo-img logo-dark" src="./LOGO_WHITE.png" alt="Foundryone logo"></a><ul class="nav-links"><li><a href="index.html" data-p="home">Home</a></li><li><a href="google-ads.html" data-p="google">Google Ads</a></li><li><a href="meta-ads.html" data-p="meta">Meta Ads</a></li><li><a href="ad-creatives.html" data-p="creatives">Ad Creatives</a></li><li><a href="preise.html" data-p="preise">Preise</a></li><li><a href="werbekampagnen.html" data-p="kampagnen">Kundenstories</a></li><li><a href="ueber-uns.html" data-p="ueber-uns">Über Uns</a></li></ul><button class="nav-pill" onclick="openModal()">Kontakt aufnehmen</button><button class="theme-toggle" type="button" onclick="toggleTheme()"><span class="theme-toggle-sun">Light</span><span class="theme-toggle-moon">Dark</span></button><button class="hamburger" onclick="toggleMob()" aria-label="Menü"><span></span><span></span><span></span></button></div></nav>
+  <div class="mob-menu" id="mob"><button class="mob-theme-toggle" type="button" onclick="toggleTheme()">Theme wechseln</button><a href="index.html" data-p="home" onclick="closeMob()">Home</a><a href="google-ads.html" data-p="google" onclick="closeMob()">Google Ads</a><a href="meta-ads.html" data-p="meta" onclick="closeMob()">Meta Ads</a><a href="ad-creatives.html" data-p="creatives" onclick="closeMob()">Ad Creatives</a><a href="preise.html" data-p="preise" onclick="closeMob()">Preise</a><a href="werbekampagnen.html" data-p="kampagnen" onclick="closeMob()">Kundenstories</a><a href="ueber-uns.html" data-p="ueber-uns" onclick="closeMob()">Über Uns</a><a href="kontakt.html" data-p="kontakt" onclick="closeMob()">Kontakt</a></div>
+
+  <section class="bg-paper" style="padding-top:100px;padding-bottom:60px">
+    <div class="inner">
+      <span class="eyebrow rv">Transparente Preise</span>
+      <h1 class="rv d1" style="font-family:var(--f-disp);font-size:clamp(48px,6vw,88px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px">Klare Preise.<br>Keine Überraschungen.</h1>
+      <p class="rv d2" style="font-size:17px;color:var(--muted);font-weight:300;max-width:580px;line-height:1.6">Monatliche Management Fee: <strong>299 €</strong>. Einmaliges Setup: <strong>499 € je Account</strong>. Das Werbebudget (Ad Spend) ist <strong>nicht</strong> enthalten.</p>
+    </div>
+  </section>
+  <section class="bg-paper" style="padding-top:0">
+    <div class="inner">
+      <div class="calc-grid">
+        <div>
+          <div class="calc-block rv">
+            <p class="calc-lbl">Leistung</p>
+            <div class="seg">
+              <button class="seg-b on" id="sg-google" onclick="setSvc('google')">Google Ads</button>
+              <button class="seg-b" id="sg-meta" onclick="setSvc('meta')">Meta Ads</button>
+              <button class="seg-b" id="sg-beide" onclick="setSvc('beide')">Beides</button>
+            </div>
+          </div>
+          <div class="calc-block rv d1">
+            <p class="calc-lbl">Werbebudget / Monat</p>
+            <div class="slider-val" id="bval">2.000 €</div>
+            <input id="bslider" type="range" min="500" max="50000" step="100" value="2000">
+            <div class="range-labels"><span>500 €</span><span>50.000 €</span></div>
+          </div>
+          <div class="calc-block rv d2">
+            <p class="calc-lbl">Laufzeit</p>
+            <div class="seg">
+              <button class="seg-b" id="sd-1" onclick="setDur(1)">1 Monat</button>
+              <button class="seg-b on" id="sd-3" onclick="setDur(3)">3 Monate</button>
+              <button class="seg-b" id="sd-6" onclick="setDur(6)">6 Monate</button>
+              <button class="seg-b" id="sd-12" onclick="setDur(12)">12 Monate</button>
+            </div>
+          </div>
+        </div>
+        <div class="r-card rv d2">
+          <div class="r-card-head"><h3>Deine Kostenübersicht</h3><p>Klar, transparent, nachvollziehbar</p></div>
+          <div class="r-card-body">
+            <div class="r-row"><span class="rl">Geplantes Werbebudget / Monat</span><span class="rv" id="rv-bud">2.000 €</span></div>
+            <div class="r-row"><span class="rl">Management Fee / Monat</span><span class="rv" id="rv-fee">299 €</span></div>
+            <div class="r-row"><span class="rl">Setup (einmalig)</span><span class="rv" id="rv-setup">499 €</span></div>
+            <div class="r-row"><span class="rl">Hinweis</span><span class="rv-val" id="rv-disc" style="color:var(--blue)">Ad Spend nicht enthalten</span></div>
+            <div class="r-row big"><span class="rl">Agenturkosten / Monat</span><span class="rv-val" id="rv-mo">299 €</span></div>
+            <div class="r-row" id="rv-tot-row"><span class="rl" id="rv-tot-lbl">Gesamtinvestition (3 Monate)</span><span class="rv-val" id="rv-tot">1.396 €</span></div>
+          </div>
+          <div class="r-card-foot"><button class="btn-ink" style="width:100%;justify-content:center" onclick="openModal()">Unverbindlich anfragen</button><p id="disc-msg" style="margin-top:14px"></p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-ink cta-s"><div class="inner"><h2 class="rv">Lass uns<br>loslegen.</h2><button class="btn-white-inv rv d2" onclick="openModal()">Kostenlose Analyse anfragen</button></div></section>
+  <footer><div class="ft-grid"><div><div class="ft-logo"><img class="logo-img logo-light" src="./LOGO_BLACK.png" alt="Foundryone logo"><img class="logo-img logo-dark" src="./LOGO_WHITE.png" alt="Foundryone logo"></div></div><div class="ft-col"><h5>Leistungen</h5><ul><li><a href="google-ads.html">Google Ads</a></li><li><a href="meta-ads.html">Meta Ads</a></li><li><a href="ad-creatives.html">Ad Creatives</a></li><li><a href="preise.html">Preise</a></li></ul></div><div class="ft-col"><h5>Kundenstories</h5><ul><li><a href="werbekampagnen.html">Werbekampagnen</a></li><li><a href="kundenstimmen.html">Kundenstimmen</a></li><li><a href="websites-portfolio.html">Websites Portfolio</a></li><li><a href="kundenbewertungen.html">Kundenbewertungen</a></li></ul></div><div class="ft-col"><h5>Unternehmen</h5><ul><li><a href="ueber-uns.html">Über Uns</a></li><li><a href="kontakt.html">Kontakt</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 Foundryone. Alle Rechte vorbehalten.</span><span>Performance Marketing Agentur</span></div></footer>
+  <script src="./script.js"></script>
+</body>
+</html>

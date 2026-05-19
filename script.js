@@ -1,7 +1,59 @@
-// ─── NAVIGATION ───────────────────────────────
-let cur = 'home';
 const THEME_KEY = 'foundryone-theme';
 const COOKIE_CONSENT_KEY = 'cookie-consent-choice';
+
+const ROUTES = {
+  home: 'index.html',
+  google: 'google-ads.html',
+  meta: 'meta-ads.html',
+  creatives: 'ad-creatives.html',
+  preise: 'preise.html',
+  'ueber-uns': 'ueber-uns.html',
+  kontakt: 'kontakt.html',
+  kampagnen: 'werbekampagnen.html',
+  stimmen: 'kundenstimmen.html',
+  portfolio: 'websites-portfolio.html',
+  bewertungen: 'kundenbewertungen.html'
+};
+
+function replaceWithHtml(target, html) {
+  if (!target) return;
+  const tpl = document.createElement('template');
+  tpl.innerHTML = html.trim();
+  target.replaceWith(tpl.content);
+}
+
+async function injectSharedLayout() {
+  try {
+    const nav = document.querySelector('nav');
+    const mob = document.getElementById('mob');
+    if (nav) {
+      const res = await fetch('./header.html', { cache: 'no-store' });
+      if (res.ok) {
+        const headerHtml = await res.text();
+        replaceWithHtml(nav, headerHtml);
+        if (mob) mob.remove();
+      }
+    }
+
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const res = await fetch('./footer.html', { cache: 'no-store' });
+      if (res.ok) {
+        const footerHtml = await res.text();
+        replaceWithHtml(footer, footerHtml);
+      }
+    }
+  } catch (err) {
+    // Keep page usable even if include loading fails.
+    console.warn('Shared layout injection failed:', err);
+  }
+}
+
+function getCurrentPageKey() {
+  const file = window.location.pathname.split('/').pop() || 'index.html';
+  const hit = Object.entries(ROUTES).find(([, v]) => v === file);
+  return hit ? hit[0] : 'home';
+}
 
 function acceptCookies() {
   localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
@@ -19,11 +71,8 @@ function initCookieBanner() {
   const banner = document.getElementById('cookie-banner');
   if (!banner) return;
   const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-  if (!consent) {
-    banner.classList.remove('is-hidden');
-    return;
-  }
-  banner.classList.add('is-hidden');
+  if (!consent) banner.classList.remove('is-hidden');
+  else banner.classList.add('is-hidden');
 }
 
 function applyTheme(theme) {
@@ -38,63 +87,30 @@ function toggleTheme() {
 }
 
 function go(page) {
-  if (page === cur) {
-    closeMob();
-    return;
-  }
-
-  const skel = document.getElementById('skel');
-
-  // Reset old page — remove .in so it's ready for next visit
-  const oldWrap = document.querySelector('#page-' + cur + ' .page-wrap');
-  if (oldWrap) oldWrap.classList.remove('in');
-  document.getElementById('page-' + cur).classList.remove('active');
-
-  // Show skeleton only when navigating to Preise
-  if (page === 'preise') skel.classList.add('show');
-  cur = page;
-
-  setTimeout(() => {
-    // Activate new page
-    const pg = document.getElementById('page-' + page);
-    pg.classList.add('active');
-    updateNavLinks();
-    window.scrollTo(0, 0);
-
-    // Ensure wrap starts hidden (class removed, no inline styles)
-    const newWrap = pg.querySelector('.page-wrap');
-    if (newWrap) newWrap.classList.remove('in');
-
-    setTimeout(() => {
-      skel.classList.remove('show');
-      // Trigger transition on next frame so browser registers the removed class first
-      if (newWrap) {
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => newWrap.classList.add('in'))
-        );
-      }
-      initReveal();
-      if (page === 'preise') updCalc();
-    }, 320);
-  }, 160);
+  const next = ROUTES[page];
+  if (!next) return;
+  window.location.href = next;
 }
 
 function updateNavLinks() {
+  const current = getCurrentPageKey();
   document.querySelectorAll('[data-p]').forEach(el => {
-    el.classList.toggle('active', el.getAttribute('data-p') === cur);
+    el.classList.toggle('active', el.getAttribute('data-p') === current);
   });
 }
 
 function toggleMob() {
-  document.getElementById('mob').classList.toggle('open');
-}
-function closeMob() {
-  document.getElementById('mob').classList.remove('open');
+  const mob = document.getElementById('mob');
+  if (mob) mob.classList.toggle('open');
 }
 
-// ─── SCROLL REVEAL ────────────────────────────
+function closeMob() {
+  const mob = document.getElementById('mob');
+  if (mob) mob.classList.remove('open');
+}
+
 function initReveal() {
-  const items = document.querySelectorAll('#page-' + cur + ' .rv:not(.go)');
+  const items = document.querySelectorAll('.rv:not(.go)');
   if (!items.length) return;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -107,10 +123,9 @@ function initReveal() {
   items.forEach(el => io.observe(el));
 }
 
-// ─── COUNT-UP ─────────────────────────────────
 function countUp(el) {
   const target = parseFloat(el.dataset.target);
-  const dec = parseInt(el.dataset.dec || '0');
+  const dec = parseInt(el.dataset.dec || '0', 10);
   const suf = el.dataset.suf || '';
   const dur = 1400;
   const start = performance.now();
@@ -125,6 +140,8 @@ function countUp(el) {
 }
 
 function initCounters() {
+  const counters = document.querySelectorAll('.count');
+  if (!counters.length) return;
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting && !e.target.dataset.done) {
@@ -134,32 +151,35 @@ function initCounters() {
       }
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('.count').forEach(el => io.observe(el));
+  counters.forEach(el => io.observe(el));
 }
 
-// ─── PRICE CALC ───────────────────────────────
 let svc = 'google', bud = 2000, dur = 3;
 
 function setSvc(s) {
   svc = s;
-  ['google', 'meta', 'beide'].forEach(id =>
-    document.getElementById('sg-' + id).classList.toggle('on', id === s)
-  );
+  ['google', 'meta', 'beide'].forEach(id => {
+    const el = document.getElementById('sg-' + id);
+    if (el) el.classList.toggle('on', id === s);
+  });
   updCalc();
 }
+
 function setDur(d) {
   dur = d;
-  [1, 3, 6, 12].forEach(n =>
-    document.getElementById('sd-' + n).classList.toggle('on', n === d)
-  );
+  [1, 3, 6, 12].forEach(n => {
+    const el = document.getElementById('sd-' + n);
+    if (el) el.classList.toggle('on', n === d);
+  });
   updCalc();
 }
+
 function nf(n) {
   return new Intl.NumberFormat('de-DE').format(Math.round(n)) + ' €';
 }
 
-// Animate a value change in an element
 function animVal(el, newVal) {
+  if (!el) return;
   el.style.transition = 'opacity .18s ease, transform .18s ease';
   el.style.opacity = '0';
   el.style.transform = 'translateY(-6px)';
@@ -175,55 +195,62 @@ function animVal(el, newVal) {
 
 function updCalc() {
   const sl = document.getElementById('bslider');
-  bud = parseInt(sl.value);
+  if (!sl) return;
+  bud = parseInt(sl.value, 10);
   const pct = ((bud - 500) / (50000 - 500)) * 100;
   sl.style.setProperty('--p', pct + '%');
-  document.getElementById('bval').textContent = nf(bud);
+  const bval = document.getElementById('bval');
+  if (bval) bval.textContent = nf(bud);
 
-  // Fixed and transparent pricing model
   const accountCount = svc === 'beide' ? 2 : 1;
   const fee = 299;
   const setup = 499 * accountCount;
-  const mo = fee; // Ad spend is excluded from agency fees
+  const mo = fee;
   const tot = mo * dur + setup;
 
-  // Animate values
   animVal(document.getElementById('rv-bud'), nf(bud));
   animVal(document.getElementById('rv-fee'), nf(fee));
   animVal(document.getElementById('rv-setup'), nf(setup));
   animVal(document.getElementById('rv-mo'), nf(mo));
   animVal(document.getElementById('rv-tot'), dur === 1 ? nf(setup + mo) : nf(tot));
   animVal(document.getElementById('rv-disc'), 'Ad Spend nicht enthalten');
-  document.getElementById('rv-disc').style.color = 'var(--blue)';
 
-  // Total label
-  document.getElementById('rv-tot-lbl').textContent = dur === 1
-    ? 'Gesamte Agenturkosten (1. Monat inkl. Setup)'
-    : `Gesamte Agenturkosten (${dur} Monate inkl. Setup)`;
+  const rvDisc = document.getElementById('rv-disc');
+  if (rvDisc) rvDisc.style.color = 'var(--blue)';
 
-  // Hint texts
+  const rvTotLbl = document.getElementById('rv-tot-lbl');
+  if (rvTotLbl) {
+    rvTotLbl.textContent = dur === 1
+      ? 'Gesamte Agenturkosten (1. Monat inkl. Setup)'
+      : `Gesamte Agenturkosten (${dur} Monate inkl. Setup)`;
+  }
+
   const hints = {
     1: 'Fixe Agenturgebühr: 299 € / Monat.',
     3: 'Setup: 499 € pro Account (einmalig).',
     6: 'Ad Spend ist nicht enthalten und wird direkt an Google/Meta gezahlt.',
     12: 'Volle Kostentransparenz für Neukunden ohne Prozentmodell.'
   };
-  document.getElementById('disc-msg').textContent = hints[dur] || '';
+  const discMsg = document.getElementById('disc-msg');
+  if (discMsg) discMsg.textContent = hints[dur] || '';
 }
 
-// ─── MODAL ────────────────────────────────────
 function openModal() {
+  closeMob();
   showOptions();
   const ov = document.getElementById('modal-overlay');
   const bx = document.getElementById('modal-box');
-  // Make visible first (no transition yet)
+  if (!ov || !bx) {
+    window.location.href = ROUTES.kontakt;
+    return;
+  }
   ov.style.transition = 'none';
   bx.style.transition = 'none';
   ov.style.opacity = '0';
   ov.style.pointerEvents = 'all';
   bx.style.transform = 'translateY(24px) scale(.96)';
+  document.body.classList.add('modal-open');
   document.body.style.overflow = 'hidden';
-  // Double RAF so browser paints the initial state before animating
   requestAnimationFrame(() =>
     requestAnimationFrame(() => {
       ov.style.transition = 'opacity .3s cubic-bezier(.16,1,.3,1)';
@@ -235,34 +262,43 @@ function openModal() {
 }
 
 function closeModal(e) {
-  if (e && e.target !== document.getElementById('modal-overlay')) return;
   const ov = document.getElementById('modal-overlay');
   const bx = document.getElementById('modal-box');
+  if (!ov || !bx) return;
+  if (e && e.target !== ov) return;
   ov.style.transition = 'opacity .25s ease';
   bx.style.transition = 'transform .25s ease';
   ov.style.opacity = '0';
   bx.style.transform = 'translateY(16px) scale(.97)';
   setTimeout(() => {
     ov.style.pointerEvents = 'none';
+    document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
   }, 260);
 }
 
 function showOptions() {
-  document.getElementById('modal-options').style.display = 'flex';
-  document.getElementById('modal-form').style.display = 'none';
-  document.getElementById('modal-success').style.display = 'none';
+  const options = document.getElementById('modal-options');
+  const form = document.getElementById('modal-form');
+  const success = document.getElementById('modal-success');
+  if (options) options.style.display = 'flex';
+  if (form) form.style.display = 'none';
+  if (success) success.style.display = 'none';
 }
 
 function showForm() {
-  document.getElementById('modal-options').style.display = 'none';
-  document.getElementById('modal-form').style.display = 'block';
+  const options = document.getElementById('modal-options');
+  const form = document.getElementById('modal-form');
+  if (options) options.style.display = 'none';
+  if (form) form.style.display = 'block';
 }
 
 function submitForm(e) {
   e.preventDefault();
-  document.getElementById('modal-form').style.display = 'none';
-  document.getElementById('modal-success').style.display = 'block';
+  const form = document.getElementById('modal-form');
+  const success = document.getElementById('modal-success');
+  if (form) form.style.display = 'none';
+  if (success) success.style.display = 'block';
 }
 
 document.addEventListener('keydown', e => {
@@ -271,12 +307,14 @@ document.addEventListener('keydown', e => {
 
 function submitKontakt(e) {
   e.preventDefault();
-  document.getElementById('kontakt-form-el').style.display = 'none';
-  document.getElementById('kontakt-success').style.display = 'block';
+  const form = document.getElementById('kontakt-form-el');
+  const success = document.getElementById('kontakt-success');
+  if (form) form.style.display = 'none';
+  if (success) success.style.display = 'block';
 }
 
-// ─── INIT ─────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await injectSharedLayout();
   const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
   applyTheme(savedTheme);
   initCookieBanner();
@@ -284,6 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initCounters();
   const sl = document.getElementById('bslider');
-  sl.addEventListener('input', updCalc);
-  updCalc();
+  if (sl) {
+    sl.addEventListener('input', updCalc);
+    updCalc();
+  }
 });
